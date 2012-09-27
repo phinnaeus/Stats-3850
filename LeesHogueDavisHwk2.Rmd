@@ -1,0 +1,149 @@
+Homework/Test Two
+========================================================
+### NAMES: First1 Last1, First2 Last2, First3 Last3
+*This is entirely our own work except as noted at the end of the document.*
+```{r comment = NA, echo = FALSE}
+Sys.time()
+```
+
+For all exercises that ask you to perform exploratory data analysis (EDA), you should plot the data (histogram, normal-quantile plots), describe the shape of the distribution (bell shaped, symmetric, skewed, etc.), and provide summary statistics (mean, standard deviation). For bootstrapping questions, use $10^4$ bootstraps, always provide plots, and describe the shape, spread, and bias of the distribution.  Make sure the $x$-axes for all bootstrap distributions label what you are bootstrapping.  All data sets for this homework are stored as `*.csv` files at [http://www1.appstate.edu/~arnholta/Data/](http://www1.appstate.edu/~arnholta/Data/)
+
+**Problem 1:** Consider a population that has a normal distribution with mean $\mu =36$, standard deviation $\sigma = 8$.
+  * The sampling distribution of $\bar{X}$ for samples of size 200 will have what distribution, mean, and standard error?
+
+> ANSWER:
+
+  * Use `R` to draw a random sample of size 200 from this population and store the values in an object named `nrs.200`. Conduct EDA on your sample.
+
+> ANSWER: 
+
+  * Compute the bootstrap distribution for $\bar{X}$ using the values stored in `nrs.200` and note the bootstrap mean and standard error.
+
+> ANSWER: 
+
+  * Compare the bootstrap distribution to the theoretical sampling distribution of $\bar{X}$.
+
+> ANSWER: 
+
+  * Repeat for samples of size $n = 50$ and $n=10$.  Carefully describe your observations about the effects of sample size on the bootstrap distribution.
+      
+
+
+> ANSWER: 
+
+**Problem 2:** Investigate the bootstrap distribution of the median. Create random samples of size $n$  for various $n$ and bootstrap the median. Describe the bootstrap distribution. Change the sample sizes to 36 and 37; 200 and 201; 10,000 and 10,001. Note the similarities/dissimilarities, trends, and so on. Why does the parity of the sample size matter?  Modify the following code as needed to answer the questions. (Adjust the $x$ limits in the plots as needed.)
+
+```{r comment = NA, cache = TRUE}
+ne <- 14 # n even
+no <- 15 # n odd
+wwe <- rnorm(ne) # draw a random sample of size ne
+wwo <- rnorm(no) # draw a random sample of size no
+B <- 10^4  # If your computer is fast, use 10^5
+even.boot <- numeric(B)
+odd.boot <- numeric(B)
+for (i in 1:B){
+  x.even <- sample(wwe, ne, replace = TRUE)
+  x.odd <- sample(wwo, no, replace = TRUE)
+  even.boot[i] <- median(x.even)
+  odd.boot[i] <- median(x.odd)
+}
+opar <- par(no.readonly = TRUE) # read current parameters
+par(mfrow=c(2, 1)) # set figure layout
+hist(even.boot, breaks = "Scott", xlim = c(-2, 2), main = "")
+hist(odd.boot, breaks = "Scott", xlim = c(-2, 2), main = "")
+par(opar)  # reset graphical parameters
+```
+
+
+
+
+> ANSWER: 
+
+**Problem 3:**  Import the data set `Bangladesh`. In addition to arsenic concentrations for 271 wells, the data set contains cobalt and chlorine concentrations.
+
+  * Conduct EDA on the chlorine concentrations and describe the salient features.
+
+> ANSWER: 
+
+  * The `Chlorine` variable has some missing values. The following code will remove these entries:
+
+> `chlorine <- subset(Bangladesh, select = Chlorine, subset = !is.na(Chlorine), drop = TRUE)`
+
+  * Bootstrap the mean.
+    
+> ANSWER: 
+
+  * Find and interpret the 92% bootstrap percentile confidence interval.
+
+
+> ANSWER:  
+
+  * What is the bootstrap estimate of the bias?  What percent of the bootstrap standard error does it represent?
+  
+>  ANSWER:  
+
+
+**Problem 4:**  The data set `FishMercury` contains mercury levels (parts per million) for 30 fish caught in lakes in Minnesota.
+
+  * Create a histogram and a horizontal boxplot of the data. Place both graphs in the same graphical device.  Use the same scale on the $x$-axis for both graphs. What do you observe?
+
+> ANSWER:  
+  
+  * Bootstrap the mean and record the bootstrap standard error and the 95% bootstrap percentile interval.
+
+> ANSWER: 
+
+  * Remove the outlier and bootstrap the mean of the remaining data.  Record the bootstrap standard error and the 95% bootstrap percentile interval.
+
+> ANSWER: 
+
+  * What effect did removing the outlier have on the bootstrap distribution, in particular, the standard error?
+  
+> ANSWER: 
+
+**Problem 5:**  Do chocolate and vanilla ice creams have the same number of calories? The data set `IceCream` contains calorie information for a sample of brands of chocolate and vanilla ice cream. Use the bootstrap to determine whether or not there is a difference in the mean number of calories.  Specifically, use a 90% bootstrap percentile confidence interval for the parameter of interest to support your conclusions.
+
+  * What is the parameter of interest?
+  
+> ANSWER: 
+
+> ANSWER:
+
+**Problem 6:**  Import the data set `FlightDelays` into `R`. Although the data are all on UA and AA flights flown in May in June of 2009, we will assume these represent a sample from a larger population of UA and AA flights flown under similar circumstances. We will consider the ratio of means of the flight delay lengths, $\mu_{UA}/\mu_{AA}$.
+
+  * Create histograms, boxplots, and quantile-quantile plots for the flight delay times of UA and AA flights.  (Extra Credit if the graphs are done with ggplot2.)  Characterize the distribution of flight delay times for each carrier.  
+  
+
+> ANSWER: 
+  
+  * Bootstrap the mean of flight delay times for each airline separately and describe the resulting bootstrap distributions.  Place the histograms and normal quantile-quantile plots of the bootstrapped quantities in the same graphical device.  That is, place all four graphs in the same device. (Hint use: `par(mfrow=c(2, 2))`) 
+  
+
+> ANSWER: 
+  
+  * Bootstrap the ratio of means. Provide plots of the bootstrap distribution and describe the distribution. 
+
+> ANSWER: 
+
+  * Find a 96% bootstrap percentile interval for the ratio of means. Interpret this interval making sure to write out the parameter to which the interval applies.
+
+
+> ANSWER:
+
+  * What is the bootstrap estimate of the bias? What fraction of the bootstrap standard error does it represent?
+  
+> ANSWER: 
+
+**Problem 7:**  Import the data set ` Twins` into `R`.  In a 1990 study by Suddath et al., reported in Ramsey and Schaeffer, researchers used magnetic resonance imaging to measure the volume of various regions of the brain for a sample of 15 monozygotic twins, where one twin was affected with schizophrenia and the other was unaffected. The twins were from North America and comprised eight male pairs, and seven female pairs ranging in age from 25 to 44 at the time of the study. The sizes in volume ($\text{cm}^3$) of the hippocampus are in the file called `Twins`. 
+
+  * Should the data be analyzed as matched pairs or be treated as if there were two independent samples?
+  
+> ANSWER: 
+  
+  * Use appropriate graphics and summary statistics to describe the difference in brain volume for affected and unaffected twins.
+  
+> ANSWER: 
+
+  * Use the appropriate randomization test to ascertain if the difference in brain volume described in the previous bullet is the result of schizophrenia or if it could be explained as a chance difference. Report your _p_-value and summarize your conclusion.
+
+> ANSWER:

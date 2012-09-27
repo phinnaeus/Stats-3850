@@ -1,0 +1,314 @@
+Resampling Homework 
+========================================================
+
+Eitan Lees, Susannah Hogue, Tyler Davis
+
+```{r echo = FALSE}
+knit_hooks$set(inline = function(x) identity(x))
+require(PASWR)
+Sys.time()
+```
+
+Prob 1. Suppose you conduct an experiment by injecting a drug into mice.  Their times for running a maze are 8, 10, and 15 seconds; the times for two control mice are 5 and 9 seconds.
+
+ * Compute the difference in mean times between the treatment group and the control group.
+
+```{r}
+treat <- c(8,10,15)
+control <- c(5,9)
+OBS <- mean(treat)-mean(control)
+OBS
+```
+
+ * Write out all possible permutations of these times to the two groups and calculate the difference in means.
+
+```{r}
+DATA <- c(treat,control)
+ANS <- t(Combinations(5, 2))
+nn <- dim(ANS)[1]
+
+
+means <- numeric(nn)
+
+for (i in 1:nn){
+  controlVals <- DATA[ANS[i,]]
+  treatmentVals <- DATA[-ANS[i,]]
+  
+  cat("Control: ", controlVals, "\tTreatment:", treatmentVals)
+  
+  means[i] <- mean(controlVals) - mean(treatmentVals)
+  
+  cat("\tDiff in Means: ", means[i], "\n")
+}
+
+```
+
+ * What proportion of the differences are as large or larger than the observed difference in mean times?
+
+```{r}
+p <- sum(means >= OBS) / length(means)
+p
+```
+
+ * For each permutation, calculate the mean of the treatment group only.  What proportion of these means are as large or larger that the observed mean of the treatment group?
+
+```{r}
+mT <- numeric(nn)
+for(i in 1:nn) {
+  mT[i] <- mean(DATA[-ANS[i,]])
+}
+
+tp <- sum(mT >= mean(treat)) / length(mT)
+tp
+```
+
+Prob 2. Flight Delays --- If you have ever traveled by air, you probably have experienced the frustration of flight delay.  The Bureau of Transportation Statistics maintains data on all aspects of air travel, including flight delays at departure and arrival at [http://www.btw.gov/xml/ontimesummarystatistics/src/index.xml](http://www.btw.gov/xml/ontimesummarystatistics/src/index.xml).  LaGuardia Airport (LGA) is one of three major airports that serves the New York City metropolitan area.  In 2008, over 23 million passengers and over 375,000 planes flew in or out of LGA.  United Airlines and American Airlines are two major airlines that schedule services at LGA.  The data set **FlightDelays** contains information on all 4029 departures of these two airlines from LGA during May and June 2009.
+
+  * Conduct a two-sided permutation test to see if there is evidence that the mean delay times are different for the two airlines.
+
+```{r comment = NA}
+site <- "http://www1.appstate.edu/~arnholta/Data/FlightDelays.csv"
+FlightDelays <- read.csv(file=url(site))
+head(FlightDelays)
+ANS <- with(data = FlightDelays,
+tapply(Delay, Carrier, mean)
+)
+ANS
+obsMeanDiffCarrier <- ANS[2] - ANS[1]
+obsMeanDiffCarrier
+with(data = FlightDelays, table(Carrier))
+#
+N <- 10^4 -1
+MeanDiffCarrier <- numeric(N)
+for (i in 1:N) {
+# sample of size 1123 #  of UA flights from the 4029 total
+index <- sample(4029, size = 1123, replace = FALSE)
+MeanDiffCarrier[i] <- mean(FlightDelays$Delay[index]) - mean(FlightDelays$Delay[-index])
+}
+hist(MeanDiffCarrier, col = "blue", breaks = "Scott", xlab = "", main = "Mean Delay Difference Between Carriers")
+abline(v = obsMeanDiffCarrier, col = "red")
+pvalue <- ((min(sum(MeanDiffCarrier >= obsMeanDiffCarrier), sum(MeanDiffCarrier <= obsMeanDiffCarrier)) + 1)/(N + 1))*2
+pvalue
+```
+
+The _p_-value for testing to see if there is evidence the mean delay times are different for the two airlines ($H_0: \mu_{DelayAmerican} = \mu_{DelayUnited}$ versus $H_a:\mu_{DelayAmerican} \neq \mu_{DelayUnited}$) is `r pvalue`.  Such a small _p_-value suggests the mean delay times for the two airlines are not the same.
+
+  * The flight delays occured in May and June of 2009.  Conduct a two-sided permutation test to see if the difference in mean delay times between the 2 months is statistically significant.
+
+```{r}
+ANS <- with(data = FlightDelays,
+            tapply(Delay, Month, mean)
+)
+ANS
+obsMeanDiffMonth <- ANS[2] - ANS[1]
+obsMeanDiffMonth
+with(data = FlightDelays, table(Month))
+N <- 10^4 -1
+MeanDiffMonth <- numeric(N)
+for (i in 1:N) {
+  # sample of size 1999 #  of UA flights from the 4029 total
+  index <- sample(4029, size = 1999, replace = FALSE)
+  MeanDiffMonth[i] <- mean(FlightDelays$Delay[index]) - mean(FlightDelays$Delay[-index])
+}
+hist(MeanDiffMonth, col = "blue", breaks = "Scott", xlab = "", main = "Mean Delay Difference Between May and June")
+abline(v = obsMeanDiffMonth, col = "red")
+pvalue <- ((min(sum(MeanDiffMonth >= obsMeanDiffMonth), sum(MeanDiffMonth <= obsMeanDiffMonth)) + 1)/(N + 1))*2
+pvalue
+
+```
+  
+  * Compute the proportion of times that each carrier's flight was delayed more than 20 minutes.  Conduct a two-sided test to see if the difference in these proportions is statistically significant.
+
+```{r}
+site <- "http://www1.appstate.edu/~arnholta/Data/FlightDelays.csv"
+FlightDelays <- read.csv(file=url(site))
+head(FlightDelays)
+ANS <- with(data = FlightDelays,
+            tapply(Delay>20, Carrier, mean)
+)
+ANS
+obsMeanDiffCarrier <- ANS[2] - ANS[1]
+obsMeanDiffCarrier
+
+N <- 10^4 -1
+MeanDiffCarrier <- numeric(N)
+
+with(data= FlightDelays,
+     tapply(Delay>20,Carrier,sum)
+     )
+
+for (i in 1:N) {
+  index <- sample(731, size = 239, replace = FALSE)
+  MeanDiffCarrier[i] <- mean(FlightDelays$Delay[index]) - mean(FlightDelays$Delay[-index])
+}
+hist(MeanDiffCarrier, col = "blue", breaks = "Scott", xlab = "", main = "Mean Delay > 20min Difference Between Carriers")
+abline(v = obsMeanDiffCarrier, col = "red")
+pvalue <- ((min(sum(MeanDiffCarrier >= obsMeanDiffCarrier), sum(MeanDiffCarrier <= obsMeanDiffCarrier)) + 1)/(N + 1))*2
+pvalue
+
+```
+
+  * Compute the variance in the flight delay lengths for each carrier.  Conduct a test to see if the variance of United Airline is greater than that of American Airlines.
+
+```{r}
+ANS <- with(data = FlightDelays,
+tapply(Delay, Carrier, var)
+)
+ANS
+names(ANS)[which.max(ANS)]
+```
+  
+  * Find the 25% trimmed mean of delay times for United Airlines and American Airlines.  Conduct a test to see if the difference in trimmed means is statistically significant.
+
+```{r}
+ANS <- with(data = FlightDelays,
+            tapply(Delay, Carrier, mean,trim =  0.25)
+            )
+ANS
+obsMeanDiffCarrier <- ANS[2] - ANS[1]
+obsMeanDiffCarrier
+with(data = FlightDelays, table(Carrier))
+#
+N <- 10^4 -1
+MeanDiffCarrier <- numeric(N)
+for (i in 1:N) {
+# sample of size 1123 #  of UA flights from the 4029 total
+index <- sample(4029, size = 1123, replace = FALSE)
+MeanDiffCarrier[i] <- mean(FlightDelays$Delay[index],trim = 0.25) - mean(FlightDelays$Delay[-index],trim = 0.25)
+}
+hist(MeanDiffCarrier, col = "blue", breaks = "Scott", xlab = "", xlim= c(-1, 2), main = "Mean Delay Difference Between Carriers")
+abline(v = obsMeanDiffCarrier, col = "red")
+pvalue <- ((min(sum(MeanDiffCarrier >= obsMeanDiffCarrier), sum(MeanDiffCarrier <= obsMeanDiffCarrier)) + 1)/(N + 1))*2
+pvalue
+
+
+```
+  
+  * Compute the proportions of times the flights in May and in June were delayed more than 20 minutes, and conduct a two-sided test of whether the difference between months is statistically significant.
+
+```{r}
+ANS <- with(data = FlightDelays,
+            tapply(Delay>20, Month, mean)
+)
+ANS
+obsMeanDiffMonth <- ANS[2] - ANS[1]
+obsMeanDiffMonth
+with(data = FlightDelays, table(Month))
+N <- 10^4 -1
+
+with(data= FlightDelays,
+     tapply(Delay>20,Carrier,sum)
+     )
+
+MeanDiffMonth <- numeric(N)
+for (i in 1:N) {
+  # sample of size 1999 #  of UA flights from the 4029 total
+  index <- sample(731, size = 239, replace = FALSE)
+  MeanDiffMonth[i] <- mean(FlightDelays$Delay[index]) - mean(FlightDelays$Delay[-index])
+}
+hist(MeanDiffMonth, col = "blue", breaks = "Scott", xlab = "", main = "Mean Delay Difference Between May and June")
+abline(v = obsMeanDiffMonth, col = "red")
+pvalue <- ((min(sum(MeanDiffMonth >= obsMeanDiffMonth), sum(MeanDiffMonth <= obsMeanDiffMonth)) + 1)/(N + 1))*2
+pvalue
+```
+  
+  * Compute the variances of the flight delay times in May and June, and then conduct a two-sided test of whether the ratio of variances is statistically different from 1.
+
+```{r}
+ANS <- with(data = FlightDelays,
+tapply(Delay, Month, var)
+)
+ANS
+obsMeanDiffMonth <- ANS[1] / ANS[2]
+obsMeanDiffMonth
+
+with(data = FlightDelays, table(Month))
+N <- 10^4 -1
+MeanDiffMonth <- numeric(N)
+for (i in 1:N) {
+  # sample of size 1999 #  of UA flights from the 4029 total
+  index <- sample(4029, size = 1999, replace = FALSE)
+  MeanDiffMonth[i] <- var(FlightDelays$Delay[index]) / var(FlightDelays$Delay[-index])
+}
+hist(MeanDiffMonth, col = "blue", breaks = "Scott", xlab = "", main = "Mean Delay Difference Between May and June")
+abline(v = obsMeanDiffMonth, col = "red")
+pvalue <- ((min(sum(MeanDiffMonth >= obsMeanDiffMonth), sum(MeanDiffMonth <= obsMeanDiffMonth)) + 1)/(N + 1))*2
+pvalue
+```
+  
+Prob 3. Black Spruce --- Black spruce (_Picea_ _marina_) is a species of slow-growing coniferous tree found across the northern part of North America.  It is commonly found on wet organic soils.  In a study conducted in the 1990s, a biologist interested in factors affecting the growth of the black spruce planted seedlings on sites located in boreal peatlands in northern Manitoba, Canada (Camill et al. (2010)).  The data set **Spruce** contains a part of the data from the study.  Seventy-two black spruce seedlings were planted in four plots under varying conditions (fertilizer - no fertilizer, competition - no competition) and their heights and diameters were measured over the course of 5 years.   
+  
+  * Conduct a test to see if the difference of the means in how much the seedlings grew over the course of the study under competition and without competition is statistically significant.
+
+```{r comment = NA}
+site <- "http://www1.appstate.edu/~arnholta/Data/Spruce.csv"
+Spruce <- read.csv(file = url(site))
+head(Spruce)
+
+result <- with(data = Spruce, 
+               tapply(Ht.change, Competition, mean)
+               )
+result
+
+DATA <- (Spruce$Ht.change)
+obsMeanDiff <- result[2] - result[1]
+obsMeanDiff
+
+with(data = Spruce, table(Competition))
+
+N <- 10^4 - 1
+MeanDiff <- numeric(N)
+for (i in 1:N) {
+  index <- sample(72, size = 36, replace = FALSE)
+  MeanDiff[i] <- mean(DATA[index]) - mean(DATA[-index])
+}
+
+hist(MeanDiff, col = "blue", breaks = "Scott", xlab = "", xlim = c(-20,20), 
+     main = "Mean Hight Difference Between Trees with Competition and without")
+
+abline(v = obsMeanDiff, col = "red")
+
+pvalue <- ((min(sum(MeanDiff >= obsMeanDiff), sum(MeanDiff <= obsMeanDiff)) + 1)/(N + 1)) * 2
+pvalue
+```
+  
+Prob 4. The file **Phillies2009** contains data from the 2009 season for the baseball team of the Philadelphia Phillies.
+  * Find the mean number of strikeouts per game for the games played at home and the games played away from home.
+
+```{r comment = NA}
+site <- "http://www1.appstate.edu/~arnholta/Data/Phillies2009.csv"
+Phillies2009 <- read.csv(file=url(site))
+head(Phillies2009)
+
+result <- tapply(Phillies2009$StrikeOuts,Phillies2009$Location,mean)
+result
+obsMeanDiff <- result[2] - result[1]
+obsMeanDiff
+```
+
+  * Perform a permutation test to see if the difference in the means is statistically significant.
+
+```{r}
+DATA <- Phillies2009$StrikeOuts
+
+with(data = Phillies2009, table(Location))
+
+N <- 10^4 - 1
+MeanDiff <- numeric(N)
+for (i in 1:N) {
+  index <- sample(162, size = 81, replace = FALSE)
+  MeanDiff[i] <- mean(DATA[index]) - mean(DATA[-index])
+}
+
+hist(MeanDiff, col = "blue", breaks = "Scott", xlab = "", 
+     main = "Mean Difference Between Home and Away Games")
+
+abline(v = obsMeanDiff, col = "red")
+
+pvalue <- ((min(sum(MeanDiff >= obsMeanDiff), sum(MeanDiff <= obsMeanDiff)) + 1)/(N + 1)) * 2
+pvalue
+```
+
+```{r, echo = FALSE}
+sessionInfo()
+```
