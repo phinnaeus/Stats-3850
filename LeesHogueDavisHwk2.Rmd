@@ -1,6 +1,6 @@
 Homework/Test Two
 ========================================================
-### NAMES: First1 Last1, First2 Last2, First3 Last3
+### NAMES: Tyler Davis, Susannah Hogue, Eitan Lees
 *This is entirely our own work except as noted at the end of the document.*
 ```{r comment = NA, echo = FALSE}
 Sys.time()
