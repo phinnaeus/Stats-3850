@@ -115,6 +115,11 @@ par(opar)  # reset graphical parameters
   
 
 > ANSWER: 
+```{r}
+### yay ggplot
+
+```
+
   
   * Bootstrap the mean of flight delay times for each airline separately and describe the resulting bootstrap distributions.  Place the histograms and normal quantile-quantile plots of the bootstrapped quantities in the same graphical device.  That is, place all four graphs in the same device. (Hint use: `par(mfrow=c(2, 2))`) 
   
