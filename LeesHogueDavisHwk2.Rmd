@@ -5,6 +5,7 @@ Homework/Test Two
 ```{r comment = NA, echo = FALSE}
 Sys.time()
 ```
+###don't suck 
 
 For all exercises that ask you to perform exploratory data analysis (EDA), you should plot the data (histogram, normal-quantile plots), describe the shape of the distribution (bell shaped, symmetric, skewed, etc.), and provide summary statistics (mean, standard deviation). For bootstrapping questions, use $10^4$ bootstraps, always provide plots, and describe the shape, spread, and bias of the distribution.  Make sure the $x$-axes for all bootstrap distributions label what you are bootstrapping.  All data sets for this homework are stored as `*.csv` files at [http://www1.appstate.edu/~arnholta/Data/](http://www1.appstate.edu/~arnholta/Data/)
 
