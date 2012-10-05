@@ -1,0 +1,434 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<title>Homework/Test Two</title>
+
+<base target="_blank"/>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+<!-- MathJax scripts -->
+<script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+</head>
+
+<body>
+<h1>Homework/Test Two</h1>
+
+<h3>NAMES: Tyler Davis, Susannah Hogue, Eitan Lees</h3>
+
+<p><em>This is entirely our own work except as noted at the end of the document.</em></p>
+
+<pre><code>[1] &quot;2012-10-05 10:49:40 EDT&quot;
+</code></pre>
+
+<p>###</p>
+
+<p>For all exercises that ask you to perform exploratory data analysis (EDA), you should plot the data (histogram, normal-quantile plots), describe the shape of the distribution (bell shaped, symmetric, skewed, etc.), and provide summary statistics (mean, standard deviation). For bootstrapping questions, use \( 10^4 \) bootstraps, always provide plots, and describe the shape, spread, and bias of the distribution.  Make sure the \( x \)-axes for all bootstrap distributions label what you are bootstrapping.  All data sets for this homework are stored as <code>*.csv</code> files at <a href="http://www1.appstate.edu/%7Earnholta/Data/">http://www1.appstate.edu/~arnholta/Data/</a></p>
+
+<p><strong>Problem 1:</strong> Consider a population that has a normal distribution with mean \( \mu = 36 \), standard deviation \( \sigma = 8 \).</p>
+
+<ul>
+<li>The sampling distribution of \( \bar{X} \) for samples of size 200 will have what distribution, mean, and standard error?</li>
+</ul>
+
+<blockquote>
+<p>ANSWER: The resulting sampling distrubtion will be normal with a mean of 36 and a standard deviation of <code>0.5657</code></p>
+</blockquote>
+
+<ul>
+<li>Use <code>R</code> to draw a random sample of size 200 from this population and store the values in an object named <code>nrs.200</code>. Conduct EDA on your sample.</li>
+</ul>
+
+<blockquote>
+<p>ANSWER: </p>
+</blockquote>
+
+<ul>
+<li>Compute the bootstrap distribution for \( \bar{X} \) using the values stored in <code>nrs.200</code> and note the bootstrap mean and standard error.</li>
+</ul>
+
+<blockquote>
+<p>ANSWER: </p>
+</blockquote>
+
+<ul>
+<li>Compare the bootstrap distribution to the theoretical sampling distribution of \( \bar{X} \).</li>
+</ul>
+
+<blockquote>
+<p>ANSWER: </p>
+</blockquote>
+
+<ul>
+<li>Repeat for samples of size \( n = 50 \) and \( n=10 \).  Carefully describe your observations about the effects of sample size on the bootstrap distribution.</li>
+</ul>
+
+<blockquote>
+<p>ANSWER: </p>
+</blockquote>
+
+<p><strong>Problem 2:</strong> Investigate the bootstrap distribution of the median. Create random samples of size \( n \)  for various \( n \) and bootstrap the median. Describe the bootstrap distribution. Change the sample sizes to 36 and 37; 200 and 201; 10,000 and 10,001. Note the similarities/dissimilarities, trends, and so on. Why does the parity of the sample size matter?  Modify the following code as needed to answer the questions. (Adjust the \( x \) limits in the plots as needed.)</p>
+
+<pre><code class="r">ne &lt;- 14  # n even
+no &lt;- 15  # n odd
+wwe &lt;- rnorm(ne)  # draw a random sample of size ne
+wwo &lt;- rnorm(no)  # draw a random sample of size no
+B &lt;- 10^4  # If your computer is fast, use 10^5
+even.boot &lt;- numeric(B)
+odd.boot &lt;- numeric(B)
+for (i in 1:B) {
+    x.even &lt;- sample(wwe, ne, replace = TRUE)
+    x.odd &lt;- sample(wwo, no, replace = TRUE)
+    even.boot[i] &lt;- median(x.even)
+    odd.boot[i] &lt;- median(x.odd)
+}
+opar &lt;- par(no.readonly = TRUE)  # read current parameters
+par(mfrow = c(2, 1))  # set figure layout
+hist(even.boot, breaks = &quot;Scott&quot;, xlim = c(-2, 2), main = &quot;&quot;)
+hist(odd.boot, breaks = &quot;Scott&quot;, xlim = c(-2, 2), main = &quot;&quot;)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-2"/> </p>
+
+<pre><code class="r">par(opar)  # reset graphical parameters
+</code></pre>
+
+<blockquote>
+<p>ANSWER: </p>
+</blockquote>
+
+<p><strong>Problem 3:</strong>  Import the data set <code>Bangladesh</code>. In addition to arsenic concentrations for 271 wells, the data set contains cobalt and chlorine concentrations.</p>
+
+<ul>
+<li>Conduct EDA on the chlorine concentrations and describe the salient features.</li>
+</ul>
+
+<blockquote>
+<p>ANSWER: </p>
+</blockquote>
+
+<ul>
+<li>The <code>Chlorine</code> variable has some missing values. The following code will remove these entries:</li>
+</ul>
+
+<blockquote>
+<p><code>chlorine &lt;- subset(Bangladesh, select = Chlorine, subset = !is.na(Chlorine), drop = TRUE)</code></p>
+</blockquote>
+
+<ul>
+<li>Bootstrap the mean.</li>
+</ul>
+
+<blockquote>
+<p>ANSWER: </p>
+</blockquote>
+
+<ul>
+<li>Find and interpret the 92% bootstrap percentile confidence interval.</li>
+</ul>
+
+<blockquote>
+<p>ANSWER:  </p>
+</blockquote>
+
+<ul>
+<li>What is the bootstrap estimate of the bias?  What percent of the bootstrap standard error does it represent?</li>
+</ul>
+
+<blockquote>
+<p>ANSWER:  </p>
+</blockquote>
+
+<p><strong>Problem 4:</strong>  The data set <code>FishMercury</code> contains mercury levels (parts per million) for 30 fish caught in lakes in Minnesota.</p>
+
+<ul>
+<li>Create a histogram and a horizontal boxplot of the data. Place both graphs in the same graphical device.  Use the same scale on the \( x \)-axis for both graphs. What do you observe?</li>
+</ul>
+
+<blockquote>
+<p>ANSWER:  </p>
+</blockquote>
+
+<ul>
+<li>Bootstrap the mean and record the bootstrap standard error and the 95% bootstrap percentile interval.</li>
+</ul>
+
+<blockquote>
+<p>ANSWER: </p>
+</blockquote>
+
+<ul>
+<li>Remove the outlier and bootstrap the mean of the remaining data.  Record the bootstrap standard error and the 95% bootstrap percentile interval.</li>
+</ul>
+
+<blockquote>
+<p>ANSWER: </p>
+</blockquote>
+
+<ul>
+<li>What effect did removing the outlier have on the bootstrap distribution, in particular, the standard error?</li>
+</ul>
+
+<blockquote>
+<p>ANSWER: </p>
+</blockquote>
+
+<p><strong>Problem 5:</strong>  Do chocolate and vanilla ice creams have the same number of calories? The data set <code>IceCream</code> contains calorie information for a sample of brands of chocolate and vanilla ice cream. Use the bootstrap to determine whether or not there is a difference in the mean number of calories.  Specifically, use a 90% bootstrap percentile confidence interval for the parameter of interest to support your conclusions.</p>
+
+<ul>
+<li>What is the parameter of interest?</li>
+</ul>
+
+<blockquote>
+<p>ANSWER: </p>
+
+<p>ANSWER:</p>
+</blockquote>
+
+<p><strong>Problem 6:</strong>  Import the data set <code>FlightDelays</code> into <code>R</code>. Although the data are all on UA and AA flights flown in May in June of 2009, we will assume these represent a sample from a larger population of UA and AA flights flown under similar circumstances. We will consider the ratio of means of the flight delay lengths, \( \mu_{UA}/\mu_{AA} \).</p>
+
+<ul>
+<li>Create histograms, boxplots, and quantile-quantile plots for the flight delay times of UA and AA flights.  (Extra Credit if the graphs are done with ggplot2.)  Characterize the distribution of flight delay times for each carrier.<br/></li>
+</ul>
+
+<blockquote>
+<p>ANSWER: </p>
+</blockquote>
+
+<pre><code class="r">### yay ggplot
+</code></pre>
+
+<ul>
+<li>Bootstrap the mean of flight delay times for each airline separately and describe the resulting bootstrap distributions.  Place the histograms and normal quantile-quantile plots of the bootstrapped quantities in the same graphical device.  That is, place all four graphs in the same device. (Hint use: <code>par(mfrow=c(2, 2))</code>) </li>
+</ul>
+
+<blockquote>
+<p>ANSWER: </p>
+</blockquote>
+
+<ul>
+<li>Bootstrap the ratio of means. Provide plots of the bootstrap distribution and describe the distribution. </li>
+</ul>
+
+<blockquote>
+<p>ANSWER: </p>
+</blockquote>
+
+<ul>
+<li>Find a 96% bootstrap percentile interval for the ratio of means. Interpret this interval making sure to write out the parameter to which the interval applies.</li>
+</ul>
+
+<blockquote>
+<p>ANSWER:</p>
+</blockquote>
+
+<ul>
+<li>What is the bootstrap estimate of the bias? What fraction of the bootstrap standard error does it represent?</li>
+</ul>
+
+<blockquote>
+<p>ANSWER: </p>
+</blockquote>
+
+<p><strong>Problem 7:</strong>  Import the data set <code>Twins</code> into <code>R</code>.  In a 1990 study by Suddath et al., reported in Ramsey and Schaeffer, researchers used magnetic resonance imaging to measure the volume of various regions of the brain for a sample of 15 monozygotic twins, where one twin was affected with schizophrenia and the other was unaffected. The twins were from North America and comprised eight male pairs, and seven female pairs ranging in age from 25 to 44 at the time of the study. The sizes in volume (\( \text{cm}^3 \)) of the hippocampus are in the file called <code>Twins</code>. </p>
+
+<ul>
+<li>Should the data be analyzed as matched pairs or be treated as if there were two independent samples?</li>
+</ul>
+
+<blockquote>
+<p>ANSWER: </p>
+</blockquote>
+
+<ul>
+<li>Use appropriate graphics and summary statistics to describe the difference in brain volume for affected and unaffected twins.</li>
+</ul>
+
+<blockquote>
+<p>ANSWER: </p>
+</blockquote>
+
+<ul>
+<li>Use the appropriate randomization test to ascertain if the difference in brain volume described in the previous bullet is the result of schizophrenia or if it could be explained as a chance difference. Report your <em>p</em>-value and summarize your conclusion.</li>
+</ul>
+
+<blockquote>
+<p>ANSWER:</p>
+</blockquote>
+
+</body>
+
+</html>
+
