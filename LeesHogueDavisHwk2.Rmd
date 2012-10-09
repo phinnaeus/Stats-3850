@@ -4,15 +4,12 @@ Homework/Test Two
 *This is entirely our own work except as noted at the end of the document.*
 ```{r comment = NA, echo = FALSE}
 Sys.time()
-
-url = "http://www1.appstate.edu/~arnholta/Data/"
 ```
 
 
-```{r message=FALSE,echo=FALSE}
+```{r message=FALSE, echo=FALSE}
 require(PASWR)
 require(ggplot2)
-
 ```
 
 ###
@@ -178,13 +175,23 @@ df <- data.frame(Small=P2.1,Medium=P2.2,Large=P2.3,Extra_Large=P2.4,row.names=c(
 df
 ```
 
-> ANSWER: In general, the parity matters when it comes to medians because with an odd sample size there is an exact median while with an even number the median must be interpolated between two central idecies
+> ANSWER: In general, the parity matters when it comes to medians because with an odd sample size there is an exact median while with an even number the median must be interpolated between two central indecies of data.
 
 **Problem 3:**  Import the data set `Bangladesh`. In addition to arsenic concentrations for 271 wells, the data set contains cobalt and chlorine concentrations.
+
+```{r echo=FALSE, message=FALSE}
+url = url("http://www1.appstate.edu/~arnholta/Data/Bangladesh.csv")
+Banga <- read.csv(url)
+```
+
 
   * Conduct EDA on the chlorine concentrations and describe the salient features.
 
 > ANSWER: 
+```{r}
+chlorineplot <- ggplot(Banga, aes(x=Chlorine))
+chlorineplot + geom_histogram()
+```
 
   * The `Chlorine` variable has some missing values. The following code will remove these entries:
 
