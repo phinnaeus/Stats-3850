@@ -7,6 +7,14 @@ Sys.time()
 
 url = "http://www1.appstate.edu/~arnholta/Data/"
 ```
+
+
+```{r message=FALSE,echo=FALSE}
+require(PASWR)
+require(ggplot2)
+
+```
+
 ###
 
 For all exercises that ask you to perform exploratory data analysis (EDA), you should plot the data (histogram, normal-quantile plots), describe the shape of the distribution (bell shaped, symmetric, skewed, etc.), and provide summary statistics (mean, standard deviation). For bootstrapping questions, use $10^4$ bootstraps, always provide plots, and describe the shape, spread, and bias of the distribution.  Make sure the $x$-axes for all bootstrap distributions label what you are bootstrapping.  All data sets for this homework are stored as `*.csv` files at [http://www1.appstate.edu/~arnholta/Data/](http://www1.appstate.edu/~arnholta/Data/)
@@ -14,25 +22,62 @@ For all exercises that ask you to perform exploratory data analysis (EDA), you s
 **Problem 1:** Consider a population that has a normal distribution with mean $\mu = 36$, standard deviation $\sigma = 8$.
   * The sampling distribution of $\bar{X}$ for samples of size 200 will have what distribution, mean, and standard error?
 
-> ANSWER: The resulting sampling distrubtion will be normal with a mean of 36 and a standard deviation of `r 8/sqrt(200)`
+> ANSWER: The resulting sampling distrubtion will be normal with a mean of 36 and a standard error of `r 8/sqrt(200)`
 
   * Use `R` to draw a random sample of size 200 from this population and store the values in an object named `nrs.200`. Conduct EDA on your sample.
 
-> ANSWER: 
+```{r}
+nrs.200 <- rnorm(200,36,8)
+p <- ggplot(as.data.frame(nrs.200),aes(x=nrs.200),color="red")
+p + geom_histogram(aes(y = ..density..), fill = "blue")+ geom_density(color = "red", size = 1.5)
+```
+
+> ANSWER: The mean, $\bar{X}$, is `r mean(nrs.200)` and the standard deviation, $\sigma$, is `r sd(nrs.200)`.
 
   * Compute the bootstrap distribution for $\bar{X}$ using the values stored in `nrs.200` and note the bootstrap mean and standard error.
 
-> ANSWER: 
+```{r}
+N = 10^4
+boot.mean <- numeric(N)
+for(i in 1:N){
+  boot.mean[i] <- mean(sample(nrs.200,length(nrs.200),replace=TRUE))
+}
+```
+
+> ANSWER: The bootstrapped mean, $\bar{X}^*$, is `r mean(boot.mean)` and standard error, $\sigma^*$, is `r sd(boot.mean)`
 
   * Compare the bootstrap distribution to the theoretical sampling distribution of $\bar{X}$.
 
-> ANSWER: 
+> ANSWER: The bootstrap distribution has a bias of `r mean(boot.mean)-mean(nrs.200)`.
 
   * Repeat for samples of size $n = 50$ and $n=10$.  Carefully describe your observations about the effects of sample size on the bootstrap distribution.
-      
+  
+
+```{r cache=TRUE}
+
+nrs.50 <- rnorm(50,36,8)
+p <- ggplot(as.data.frame(nrs.50),aes(x=nrs.50),color="red")
+p + geom_histogram(aes(y = ..density..), fill = "blue")+ geom_density(color = "red", size = 1.5)
+
+N = 10^4
+boot.mean.50 <- numeric(N)
+for(i in 1:N){
+  boot.mean.50[i] <- mean(sample(nrs.50,length(nrs.50),replace=TRUE))
+}
+
+nrs.10 <- rnorm(10,36,8)
+p <- ggplot(as.data.frame(nrs.10),aes(x=nrs.10),color="red")
+p + geom_histogram(aes(y = ..density..), fill = "blue")+ geom_density(color = "red", size = 1.5)
+
+N = 10^4
+boot.mean.10 <- numeric(N)
+for(i in 1:N){
+  boot.mean.10[i] <- mean(sample(nrs.10,length(nrs.10),replace=TRUE))
+}
+```
 
 
-> ANSWER: 
+> ANSWER: For $n = 50$ the bootstrap mean, $\bar{X}^*$, is `r mean(boot.mean.50)`, the standard error, $\sigma^*$, is `r sd(boot.mean.50)` and bias is, `r mean(boot.mean.50)-mean(nrs.50)`. For $n = 10$ the bootstrap mean, $\bar{X}^*$, is `r mean(boot.mean.10)`, the standard error, $\sigma^*$, is `r sd(boot.mean.10)` and bias is, `r mean(boot.mean.10)-mean(nrs.10)`. As the sample size increases, $\bar{X}^*$ and $\sigma^*$ approach $\bar{X}$ and $\frac{\sigma}{\sqrt{n}}$ respectivly.
 
 **Problem 2:** Investigate the bootstrap distribution of the median. Create random samples of size $n$  for various $n$ and bootstrap the median. Describe the bootstrap distribution. Change the sample sizes to 36 and 37; 200 and 201; 10,000 and 10,001. Note the similarities/dissimilarities, trends, and so on. Why does the parity of the sample size matter?  Modify the following code as needed to answer the questions. (Adjust the $x$ limits in the plots as needed.)
 
@@ -55,12 +100,85 @@ par(mfrow=c(2, 1)) # set figure layout
 hist(even.boot, breaks = "Scott", xlim = c(-2, 2), main = "")
 hist(odd.boot, breaks = "Scott", xlim = c(-2, 2), main = "")
 par(opar)  # reset graphical parameters
+
+P2.1 <- c(mean(even.boot),mean(odd.boot))
 ```
 
 
+```{r comment = NA, cache = TRUE}
+ne <- 36 # n even
+no <- 37 # n odd
+wwe <- rnorm(ne) # draw a random sample of size ne
+wwo <- rnorm(no) # draw a random sample of size no
+B <- 10^4  # If your computer is fast, use 10^5
+even.boot <- numeric(B)
+odd.boot <- numeric(B)
+for (i in 1:B){
+  x.even <- sample(wwe, ne, replace = TRUE)
+  x.odd <- sample(wwo, no, replace = TRUE)
+  even.boot[i] <- median(x.even)
+  odd.boot[i] <- median(x.odd)
+}
+opar <- par(no.readonly = TRUE) # read current parameters
+par(mfrow=c(2, 1)) # set figure layout
+hist(even.boot, breaks = "Scott", xlim = c(-.1, .1), main = "")
+hist(odd.boot, breaks = "Scott", xlim = c(-.1, .1), main = "")
+par(opar)  # reset graphical parameters
+P2.2 <- c(mean(even.boot),mean(odd.boot))
+```
 
 
-> ANSWER: 
+```{r comment = NA, cache = TRUE}
+ne <- 200 # n even
+no <- 201 # n odd
+wwe <- rnorm(ne) # draw a random sample of size ne
+wwo <- rnorm(no) # draw a random sample of size no
+B <- 10^4  # If your computer is fast, use 10^5
+even.boot <- numeric(B)
+odd.boot <- numeric(B)
+for (i in 1:B){
+  x.even <- sample(wwe, ne, replace = TRUE)
+  x.odd <- sample(wwo, no, replace = TRUE)
+  even.boot[i] <- median(x.even)
+  odd.boot[i] <- median(x.odd)
+}
+opar <- par(no.readonly = TRUE) # read current parameters
+par(mfrow=c(2, 1)) # set figure layout
+hist(even.boot, breaks = "Scott", xlim = c(-.1, .1), main = "")
+hist(odd.boot, breaks = "Scott", xlim = c(-.1, .1), main = "")
+par(opar)  # reset graphical parameters
+P2.3 <- c(mean(even.boot),mean(odd.boot))
+```
+
+
+```{r comment = NA, cache = TRUE}
+ne <- 10000 # n even
+no <- 10001 # n odd
+wwe <- rnorm(ne) # draw a random sample of size ne
+wwo <- rnorm(no) # draw a random sample of size no
+B <- 10^4  # If your computer is fast, use 10^5
+even.boot <- numeric(B)
+odd.boot <- numeric(B)
+for (i in 1:B){
+  x.even <- sample(wwe, ne, replace = TRUE)
+  x.odd <- sample(wwo, no, replace = TRUE)
+  even.boot[i] <- median(x.even)
+  odd.boot[i] <- median(x.odd)
+}
+opar <- par(no.readonly = TRUE) # read current parameters
+par(mfrow=c(2, 1)) # set figure layout
+hist(even.boot, breaks = "Scott", xlim = c(-.1, .1), main = "")
+hist(odd.boot, breaks = "Scott", xlim = c(-.1, .1), main = "")
+par(opar)  # reset graphical parameters
+P2.4 <- c(mean(even.boot),mean(odd.boot))
+```
+
+```{r}
+df <- data.frame(Small=P2.1,Medium=P2.2,Large=P2.3,Extra_Large=P2.4,row.names=c("Even Boot","Odd Boot"))
+df
+```
+
+> ANSWER: In general, the parity matters when it comes to medians because with an odd sample size there is an exact median while with an even number the median must be interpolated between two central idecies
 
 **Problem 3:**  Import the data set `Bangladesh`. In addition to arsenic concentrations for 271 wells, the data set contains cobalt and chlorine concentrations.
 
