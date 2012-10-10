@@ -1,3 +1,4 @@
+`r opts_chunk$set(cache=TRUE)`
 ```{r echo=FALSE}
 ### This is a function we found on the internet (http://wiki.stdout.org/rcookbook/Graphs/Multiple%20graphs%20on%20one%20page%20(ggplot2)/) to help ggplot use one graphical device for multiple plots. 
 
@@ -73,7 +74,7 @@ Sys.time()
 ```
 
 
-```{r message=FALSE, echo=FALSE}
+```{r message=FALSE, echo=FALSE, warning=FALSE}
 require(PASWR)
 require(ggplot2)
 ```
@@ -89,13 +90,13 @@ For all exercises that ask you to perform exploratory data analysis (EDA), you s
 
   * Use `R` to draw a random sample of size 200 from this population and store the values in an object named `nrs.200`. Conduct EDA on your sample.
 
-```{r}
+```{r message=FALSE}
 nrs.200 <- rnorm(200,36,8)
 p <- ggplot(as.data.frame(nrs.200),aes(x=nrs.200),color="red")
-p + geom_histogram(aes(y = ..density..), fill = "blue")+ geom_density(color = "red", size = 1.5)
+p + geom_histogram(aes(y = ..density..), fill = "lightskyblue")+ geom_density(color = "brown1", size = 1.5)
 
 p2 <- ggplot(as.data.frame(nrs.200),aes(sample=nrs.200))
-p2 + stat_qq()
+p2 + stat_qq(color="green3")
 ```
 
 > ANSWER: The mean, $\bar{X}$, is `r mean(nrs.200)` and the standard deviation, $\sigma$, is `r sd(nrs.200)`.
@@ -108,6 +109,10 @@ boot.mean <- numeric(N)
 for(i in 1:N){
   boot.mean[i] <- mean(sample(nrs.200,length(nrs.200),replace=TRUE))
 }
+
+############### HELP ###############
+# Should I report the standar error as $\sigma^*$
+####################################
 ```
 
 > ANSWER: The bootstrapped mean, $\bar{X}^*$, is `r mean(boot.mean)` and standard error, $\sigma^*$, is `r sd(boot.mean)`
@@ -119,21 +124,29 @@ for(i in 1:N){
   * Repeat for samples of size $n = 50$ and $n=10$.  Carefully describe your observations about the effects of sample size on the bootstrap distribution.
   
 
-```{r cache=TRUE}
+```{r cache=TRUE, message=FALSE}
 
 nrs.50 <- rnorm(50,36,8)
 p <- ggplot(as.data.frame(nrs.50),aes(x=nrs.50),color="red")
 p + geom_histogram(aes(y = ..density..), fill = "blue")+ geom_density(color = "red", size = 1.5)
+
+p2 <- ggplot(as.data.frame(nrs.50),aes(sample=nrs.50))
+p2 + stat_qq(color="green3")
 
 N = 10^4
 boot.mean.50 <- numeric(N)
 for(i in 1:N){
   boot.mean.50[i] <- mean(sample(nrs.50,length(nrs.50),replace=TRUE))
 }
+```
 
+```{r cache=TRUE, message=FALSE}
 nrs.10 <- rnorm(10,36,8)
 p <- ggplot(as.data.frame(nrs.10),aes(x=nrs.10),color="red")
 p + geom_histogram(aes(y = ..density..), fill = "blue")+ geom_density(color = "red", size = 1.5)
+
+p2 <- ggplot(as.data.frame(nrs.10),aes(sample=nrs.10))
+p2 + stat_qq(color="green3")
 
 N = 10^4
 boot.mean.10 <- numeric(N)
@@ -242,9 +255,13 @@ P2.4 <- c(mean(even.boot),mean(odd.boot))
 ```{r}
 df <- data.frame(Small=P2.1,Medium=P2.2,Large=P2.3,Extra_Large=P2.4,row.names=c("Even Boot","Odd Boot"))
 df
+
+############ HELP ############
+# Need's a better Answer
+##############################
 ```
 
-> ANSWER: In general, the parity matters when it comes to medians because with an odd sample size there is an exact median while with an even number the median must be interpolated between two central indecies of data. As #################################################
+> ANSWER: In general, the parity matters when it comes to medians because with an odd sample size there is an exact median while with an even number the median must be interpolated between two central indecies of data.
 
 **Problem 3:**  Import the data set `Bangladesh`. In addition to arsenic concentrations for 271 wells, the data set contains cobalt and chlorine concentrations.
 
@@ -258,7 +275,7 @@ Banga <- read.csv(url)
 
 > ANSWER: 
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 chlorineplot <- ggplot(Banga, aes(x=Chlorine))
 chlorineplot + geom_histogram(aes(y = ..density..), fill = "blue")+ geom_density(color = "red", size = 1.5)
 
@@ -283,6 +300,10 @@ boot.mean <- numeric(N)
 for(i in 1:N){
   boot.mean[i] <- mean(sample(chlorine,length(chlorine),replace=TRUE))
 }
+
+############### HELP ###############
+# Should I report the standar error as $\sigma^*$
+####################################
 ```
 
 > ANSWER:  The bootstrapped mean, $\bar{X}^*$, is `r mean(boot.mean)` and standard error, $\sigma^*$, is `r sd(boot.mean)`. The bootstrap distribution has a bias of `r mean(boot.mean)-mean(chlorine)`.
@@ -291,12 +312,13 @@ for(i in 1:N){
 
 ```{r}
 CI <- quantile(boot.mean, prob = c(.04, .96))
-CI
 ```
 
 > ANSWER: We are 92% sure that the Cholrine concertration falls between `r CI[1]` and `r CI[2]`.
 
   * What is the bootstrap estimate of the bias?  What percent of the bootstrap standard error does it represent?
+
+### HELP!!!
 
 > ANSWER: The bootstrap distribution has a bias of `r mean(boot.mean)-mean(chlorine)`, which is `r (mean(boot.mean)-mean(chlorine)/sd(boot.mean)*100)`%.
 
@@ -317,6 +339,12 @@ plot1 <- p + geom_histogram(aes(y = ..density..), fill = "blue")+ geom_density(c
 plot2 <- q + geom_boxplot() + coord_flip()
 
 multiplot(plot2,plot1,cols=1)
+
+############### HELP ###############
+# Can i use ggplot to line up the scale bars
+# and what is going on with the x axis in the 
+# bar plot?!?!
+####################################
 ```
 
 > ANSWER: The mean, $\bar{X}$, is `r mean(fish$Mercury)` and the standard deviation, $\sigma$, is `r sd(fish$Mercury)`.
@@ -332,7 +360,10 @@ for(i in 1:N){
 }
 
 CI <- quantile(boot.mean, prob = c(.025, .975))
-CI
+
+############### HELP ###############
+# knitting in scientific notation!?!?
+####################################
 ```
 
 > ANSWER: The bootstrapped mean, $\bar{X}^*$, is `r mean(boot.mean)` and the standard error, $\sigma^*$, is `r sd(boot.mean)`. The bootstrap distribution has a bias of `r mean(boot.mean)-mean(fish$Mercury)`. We are 95% sure that the Mercury levels fall between `r CI[1]` and `r CI[2]`.
@@ -362,7 +393,7 @@ CI2
   * What is the parameter of interest?
 
 
-```{r}
+```{r message=FALSE}
 url = url("http://www1.appstate.edu/~arnholta/Data/IceCream.csv")
 cream <- read.csv(url)
 
@@ -384,8 +415,10 @@ for(i in 1:N){
   boot.mean.diff[i] <- mean(sample(v_cal,length(v_cal),replace=TRUE))-mean(sample(c_cal,length(c_cal),replace=TRUE))
 }
 CI <- quantile(boot.mean.diff, prob = c(.05, .95))
-CI
-#################### HELP! #########################
+############### HELP ###############
+# Should I report for my CI, and is 
+# my CI too big?!?!
+####################################
 ```
 
 
@@ -394,11 +427,8 @@ CI
 **Problem 6:**  Import the data set `FlightDelays` into `R`. Although the data are all on UA and AA flights flown in May in June of 2009, we will assume these represent a sample from a larger population of UA and AA flights flown under similar circumstances. We will consider the ratio of means of the flight delay lengths, $\mu_{UA}/\mu_{AA}$.
 
   * Create histograms, boxplots, and quantile-quantile plots for the flight delay times of UA and AA flights.  (Extra Credit if the graphs are done with ggplot2.)  Characterize the distribution of flight delay times for each carrier.  
-  
 
-> ANSWER: 
-
-```{r}
+```{r message=FALSE}
 url = url("http://www1.appstate.edu/~arnholta/Data/FlightDelays.csv")
 delays <- read.csv(url)
 
@@ -416,7 +446,7 @@ p3 + geom_boxplot() + coord_flip()
 
 ```
 
-The distribution of flight delays in United Arilines and American Airlines are both exponential.
+> ANSWER: The distribution of flight delays in United Arilines and American Airlines are both exponential.
   
   * Bootstrap the mean of flight delay times for each airline separately and describe the resulting bootstrap distributions.  Place the histograms and normal quantile-quantile plots of the bootstrapped quantities in the same graphical device.  That is, place all four graphs in the same device. (Hint use: `par(mfrow=c(2, 2))`)
   
@@ -436,8 +466,30 @@ for (i in 1:B){
   UA.boot[i] <- mean(x.UA)
   AA.boot[i] <- mean(x.AA)
 }
+######################
 
-mean.ratio <- mean(UA.boot)/mean(AA.boot)
+p <- ggplot(as.data.frame(nrs.200),aes(x=nrs.200),color="red")
+p + geom_histogram(aes(y = ..density..), fill = "lightskyblue")+ geom_density(color = "brown1", size = 1.5)
+
+p2 <- ggplot(as.data.frame(nrs.200),aes(sample=nrs.200))
+p2 + stat_qq(color="green3")
+
+######################
+plot1 <- ggplot(as.data.frame(UA.boot),aes(x=UA.boot),color="red") + geom_histogram(aes(y = ..density..), fill = "lightskyblue")+ geom_density(color = "brown1", size = 1.5)
+
+plot3 <- ggplot(as.data.frame(UA.boot),aes(sample=UA.boot)) + stat_qq(color="green3")
+
+plot2 <- ggplot(as.data.frame(AA.boot),aes(x=AA.boot),color="red") + geom_histogram(aes(y = ..density..), fill = "lightskyblue")+ geom_density(color = "brown1", size = 1.5)
+
+plot4 <- ggplot(as.data.frame(AA.boot),aes(sample=AA.boot)) + stat_qq(color="green3")
+
+multiplot(plot1,plot2,plot3,plot4, cols=2)
+
+###mean.ratio <- mean(UA.boot)/mean(AA.boot)
+
+############### HELP ###############
+# Need to discribe the shapes
+####################################
 ```
 
   * Bootstrap the ratio of means. Provide plots of the bootstrap distribution and describe the distribution. 
@@ -466,7 +518,11 @@ The distribution of the bootstrapped ratio of means is normal with a mean of `r 
 
 ```{r}
 CI <- quantile(boot.ratio, prob = c(0.02, 0.98))
-CI
+
+############### HELP ###############
+# what does What is the bootstrap estimate of the bias? 
+# and What fraction of the bootstrap standard error does it represent? mean
+####################################
 ```
 
 > ANSWER:
@@ -492,14 +548,14 @@ twins <- read.csv(url)
   
   * Use appropriate graphics and summary statistics to describe the difference in brain volume for affected and unaffected twins.
 
-```{r}
+```{r message=FALSE}
 p <- ggplot(as.data.frame(twins$Difference),aes(x=twins$Difference),color="red")
 p + geom_histogram(aes(y = ..density..), fill = "blue")+ geom_density(color = "red", size = 1.5)
 p2 <- ggplot(as.data.frame(twins$Difference),aes(sample=twins$Difference))
 p2 + stat_qq()
 ```
 
-> ANSWER: The mean of the difference in brain volume for affected and unaffected twins is `r mean(twins$Difference)`. The standard deviation of the in brain volume for affected and unaffected twins is `r sd(twins$Difference)`.
+> ANSWER: The mean of the difference in brain volume for affected and unaffected twins is `r mean(twins$Difference)`. The standard deviation of the difference in brain volume for affected and unaffected twins is `r sd(twins$Difference)`.
 
   * Use the appropriate randomization test to ascertain if the difference in brain volume described in the previous bullet is the result of schizophrenia or if it could be explained as a chance difference. Report your _p_-value and summarize your conclusion.
 
