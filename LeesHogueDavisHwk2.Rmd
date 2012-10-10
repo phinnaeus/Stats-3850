@@ -1,4 +1,13 @@
+<<<<<<< HEAD
 `r opts_chunk$set(cache=TRUE)`
+=======
+```{r echo=FALSE, message=FALSE}
+color1 = "orange"
+color2 = "green"
+```
+
+
+>>>>>>> 171c5e28838b2c87976a969014dd33e93f86ae3f
 ```{r echo=FALSE}
 ### This is a function we found on the internet (http://wiki.stdout.org/rcookbook/Graphs/Multiple%20graphs%20on%20one%20page%20(ggplot2)/) to help ggplot use one graphical device for multiple plots. 
 
@@ -57,8 +66,8 @@ randtest.paired <- function(x, y, fun = mean, reps = 10000 - 1, COL = "lightblue
   two.sided.p <- (sum(abs(results) >= abs(observed)) + 1)/(reps + 1)
   temp <- c(greater.p, less.p, two.sided.p) 
   hist(results, breaks = "Scott", freq= FALSE, col = COL, xlab = "", main = "")
-  curve(dnorm(x, mean(results), sd = sd(results)), add = TRUE, col = "blue")
-  abline(v = observed, col = "red", lwd = 2)
+  curve(dnorm(x, mean(results), sd = sd(results)), add = TRUE, col = color2)
+  abline(v = observed, col = color1, lwd = 2)
   names(temp)<- c("p.greater.than","p.less.than","two.sided.p") 
   return(temp) 
 }
@@ -92,8 +101,13 @@ For all exercises that ask you to perform exploratory data analysis (EDA), you s
 
 ```{r message=FALSE}
 nrs.200 <- rnorm(200,36,8)
+<<<<<<< HEAD
 p <- ggplot(as.data.frame(nrs.200),aes(x=nrs.200),color="red")
 p + geom_histogram(aes(y = ..density..), fill = "lightskyblue") + geom_density(color = "brown1", size = 1.5)
+=======
+p <- ggplot(as.data.frame(nrs.200),aes(x=nrs.200),color=color1)
+p + geom_histogram(aes(y = ..density..), fill = color2)+ geom_density(color = color1, size = 1.5)
+>>>>>>> 171c5e28838b2c87976a969014dd33e93f86ae3f
 
 p2 <- ggplot(as.data.frame(nrs.200),aes(sample=nrs.200))
 p2 + stat_qq(color="green3")
@@ -123,8 +137,8 @@ for(i in 1:N){
 ```{r cache=TRUE, message=FALSE}
 
 nrs.50 <- rnorm(50,36,8)
-p <- ggplot(as.data.frame(nrs.50),aes(x=nrs.50),color="red")
-p + geom_histogram(aes(y = ..density..), fill = "blue")+ geom_density(color = "red", size = 1.5)
+p <- ggplot(as.data.frame(nrs.50),aes(x=nrs.50),color=color1)
+p + geom_histogram(aes(y = ..density..), fill = color2)+ geom_density(color = color1, size = 1.5)
 
 p2 <- ggplot(as.data.frame(nrs.50),aes(sample=nrs.50))
 p2 + stat_qq(color="green3")
@@ -138,8 +152,8 @@ for(i in 1:N){
 
 ```{r cache=TRUE, message=FALSE}
 nrs.10 <- rnorm(10,36,8)
-p <- ggplot(as.data.frame(nrs.10),aes(x=nrs.10),color="red")
-p + geom_histogram(aes(y = ..density..), fill = "blue")+ geom_density(color = "red", size = 1.5)
+p <- ggplot(as.data.frame(nrs.10),aes(x=nrs.10),color=color1)
+p + geom_histogram(aes(y = ..density..), fill = color2)+ geom_density(color = color1, size = 1.5)
 
 p2 <- ggplot(as.data.frame(nrs.10),aes(sample=nrs.10))
 p2 + stat_qq(color="green3")
@@ -267,7 +281,7 @@ Banga <- read.csv(url)
 
 ```{r message=FALSE, warning=FALSE}
 chlorineplot <- ggplot(Banga, aes(x=Chlorine))
-chlorineplot + geom_histogram(aes(y = ..density..), fill = "blue")+ geom_density(color = "red", size = 1.5)
+chlorineplot + geom_histogram(aes(y = ..density..), fill = color2)+ geom_density(color = color1, size = 1.5)
 
 chlorineplot1 <- ggplot(Banga, aes(sample=Chlorine))
 chlorineplot1 + stat_qq()
@@ -321,7 +335,12 @@ q <- ggplot(fish, aes(x=Mercury,y=Mercury))
 
 plot1 <- p + geom_histogram(aes(y = ..density..), fill = "blue")+ geom_density(color = "red", size = 1.5) #+ xlim(0,2)
 
+<<<<<<< HEAD
 plot2 <- q + geom_boxplot() + coord_flip()#+ xlim(0,2)
+=======
+plot1 <- p + geom_histogram(aes(y = ..density..), fill = color2)+ geom_density(color = color1, size = 1.5)
+plot2 <- q + geom_boxplot() + coord_flip()
+>>>>>>> 171c5e28838b2c87976a969014dd33e93f86ae3f
 
 multiplot(plot2,plot1,cols=1)
 ```
@@ -382,6 +401,13 @@ plot1
 plot3 <- ggplot(as.data.frame(d_cal),aes(sample=d_cal)) + stat_qq(color="green3")
 plot3
 
+<<<<<<< HEAD
+=======
+p1 <- ggplot(data = df, aes(x = Calories)) + geom_histogram(aes(y = ..density..), fill = color2) + facet_grid(Flavor ~ .) + geom_density(color = color1, size = 1.5)
+p1
+p2 <- ggplot(data = df, aes(sample = Calories, color = Flavor)) + stat_qq()
+p2
+>>>>>>> 171c5e28838b2c87976a969014dd33e93f86ae3f
 ######
 N = 10^4
 boot.mean.diff <- numeric(N)
@@ -404,7 +430,7 @@ delays <- read.csv(url)
 
 DUAAA <- subset(delays, select=c(Carrier, Delay))
 
-p1 <- ggplot(data = DUAAA, aes(x = Delay)) + geom_histogram(aes(y = ..density..), fill = "blue") + facet_grid(Carrier ~ .) + geom_density(color = "red", size = 1.5)
+p1 <- ggplot(data = DUAAA, aes(x = Delay)) + geom_histogram(aes(y = ..density..), fill = color2) + facet_grid(Carrier ~ .) + geom_density(color = color1, size = 1.5)
 p1
 p2 <- ggplot(data = DUAAA, aes(sample = Delay, color = Carrier)) + stat_qq()
 p2
@@ -461,8 +487,13 @@ for (i in 1:B){
   boot.ratio[i] <- mean(x.UA)/mean(x.AA)
 }
 
+<<<<<<< HEAD
 p <- ggplot(as.data.frame(boot.ratio),aes(x=boot.ratio),color="red")
 p + geom_histogram(aes(y = ..density..), fill = "blue")+ geom_density(color = "red", size = 1.5) 
+=======
+p <- ggplot(as.data.frame(boot.ratio),aes(x=boot.ratio),color=color1)
+p + geom_histogram(aes(y = ..density..), fill = color2)+ geom_density(color = color1, size = 1.5)
+>>>>>>> 171c5e28838b2c87976a969014dd33e93f86ae3f
 
 p2 <- ggplot(as.data.frame(boot.ratio),aes(sample=boot.ratio))
 p2 + stat_qq()
@@ -498,9 +529,15 @@ twins <- read.csv(url)
   
   * Use appropriate graphics and summary statistics to describe the difference in brain volume for affected and unaffected twins.
 
+<<<<<<< HEAD
 ```{r message=FALSE}
 p <- ggplot(as.data.frame(twins$Difference),aes(x=twins$Difference),color="red")
 p + geom_histogram(aes(y = ..density..), fill = "blue")+ geom_density(color = "red", size = 1.5)
+=======
+```{r}
+p <- ggplot(as.data.frame(twins$Difference),aes(x=twins$Difference),color=color1)
+p + geom_histogram(aes(y = ..density..), fill = color2)+ geom_density(color = color1, size = 1.5)
+>>>>>>> 171c5e28838b2c87976a969014dd33e93f86ae3f
 p2 <- ggplot(as.data.frame(twins$Difference),aes(sample=twins$Difference))
 p2 + stat_qq()
 ```
@@ -510,7 +547,7 @@ p2 + stat_qq()
   * Use the appropriate randomization test to ascertain if the difference in brain volume described in the previous bullet is the result of schizophrenia or if it could be explained as a chance difference. Report your _p_-value and summarize your conclusion.
 
 ```{r}
-result <- randtest.paired(twins$Unaffected, twins$Affected, COL = "green", reps = 10000-1)
+result <- randtest.paired(twins$Unaffected, twins$Affected, COL = color1, reps = 10000-1)
 ```
 
 > ANSWER: With a p-value of `r result[3]` there is significant evidence to support the alternative hypothoses that the difference in brain volume is the result of schizophrenia.
