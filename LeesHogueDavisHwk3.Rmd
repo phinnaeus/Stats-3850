@@ -1,62 +1,191 @@
+```{r echo=FALSE,warning=FALSE,message=FALSE}
+require(ggplot2)
+
+## define colors for easy changing 
+primaryColor = "red"
+secondaryColor = "blue"
+
+EDA.hist <- function(data, col1=primaryColor, col2=secondaryColor) {
+  p <- ggplot(as.data.frame(data),aes(x=data),color=col1)
+  p + geom_histogram(aes(y = ..density..), fill = col2)+ geom_density(color =   col1, size = 1.5)
+}
+
+EDA.qq <- function(data, col1=primaryColor, col2=secondaryColor) {
+  p2 <- ggplot(as.data.frame(data),aes(sample=data))
+  p2 + stat_qq(color=col2)
+}
+
+importData <- function(dataset) {
+  url = url(paste("http://www1.appstate.edu/~arnholta/Data/", dataset, ".csv", sep=""))
+  read.csv(file=url)
+}
+```
+
+
 Confidence Intervals Homework
 =============================
-### NAMES: First1 Last1, First2 Last2, First3 Last3 --- Partial Solution
+### NAMES: Eitan Lees, Susannah Hogue, Tyler Davis --- Partial Solution
 *This is entirely our own work except as noted at the end of the document.*
 
 **Due No Later than 5pm, November 15, 2012**
 
-```{r setup, comment = NA, echo = FALSE, message = FALSE}
+```{r setup, comment = NA, echo = FALSE, message = FALSE,warning=FALSE}
 Sys.time()
-opts_chunk$set(comment = NA, cache = TRUE, fig.show='hold',fig.height=4, fig.width=4)
+opts_chunk$set(comment = NA, cache = TRUE, fig.show='hold', fig.height=4, fig.width=4)
 require(ggplot2)
 ```
 
 **Prob1** - Import the data set `Spruce` into `R`.
+```{r}
+Spruce <- importData("Spruce")
+head(Spruce)
+```
 
 * Create exploratory plots to check the distribution of the variable `Ht.change`.
+
+```{r warning=FALSE,message=FALSE}
+EDA.hist(Spruce$Ht.change)
+EDA.qq(Spruce$Ht.change)
+```
+
+The data has an approximately normal distribution.
   
 * Find a 95% $t$ confidence interval for the mean height change over the 5-year period of the study and give a sentence interpreting your interval.
 
-> SOLUTION: 
+> SOLUTION:
+
+```{r}
+spruce_t <- t.test(Spruce$Ht.change)
+```
+
+We are 95% confident that the change in height for a spruce tree in a 5 year period is within (`r spruce_t$conf.int[1]`, `r spruce_t$conf.int[2]`).
 
 * Create exploratory plots to compare the distributions of the variable `Ht.change` for the seedlings in the fertilized and nonfertilized plots.
 
+**Without Fertilizer**
+```{r warning=FALSE,message=FALSE}
+EDA.hist(Spruce$Ht.change[Spruce$Fertilizer == "F"])
+EDA.qq(Spruce$Ht.change[Spruce$Fertilizer == "F"])
+```
+
+**With Fertilizer**
+```{r warning=FALSE,message=FALSE}
+EDA.hist(Spruce$Ht.change[Spruce$Fertilizer != "F"])
+EDA.qq(Spruce$Ht.change[Spruce$Fertilizer != "F"])
+```
 
 * Find the 95% one-sided lower $t$ confidence bound for the difference in mean heights ($\mu_F - \mu_{NF}$) over the 5-year period of the study and give a sentence interpreting your interval.
 
-> SOLUTION: 
+> SOLUTION:
+
+```{r}
+spruce_t2 <- t.test(Spruce$Ht.change[Spruce$Fertilizer != "T"],Spruce$Ht.change[Spruce$Fertilizer != "F"], alternative="greater")
+```
+
+We are 95% confident that the difference in heights between spruce trees that were fertilized and those that were not during a 5 year period is at least `r spruce_t2$conf.int[1]`.
 
 **Prob2** - Consider the data set `Girls2004` with birth weights of baby girls born in Wyoming or Alaska.
   
 * Create exploratory plots and compare the distribution of weight between the babies born in the two states.
   
+```{r}
+Girls <- importData("Girls2004")
+head(Girls)
+```
 
+> SOLUTION:
 
-> SOLUTION: 
+**Wyoming**
+```{r warning=FALSE,message=FALSE}
+EDA.hist(Girls$Weight[Girls$State == "WY"])
+EDA.qq(Girls$Weight[Girls$State == "WY"])
+```
+
+**Alaska**
+```{r warning=FALSE,message=FALSE}
+EDA.hist(Girls$Weight[Girls$State == "AK"])
+EDA.qq(Girls$Weight[Girls$State == "AK"])
+```
 
 * Find a 95% $t$ confidence interval for the mean difference in weights for girls born in these two states.  Give a sentence interpreting this interval.
 
 > SOLUTION:
 
+```{r}
+girls_t <- t.test(Girls$Weight[Girls$State == "AK"],Girls$Weight[Girls$State == "WY"])
+```
+
+We are 95% confident that the difference in weights between girls born in Wyoming and girls born in Alaska is within (`r girls_t$conf.int[1]`, `r girls_t$conf.int[2]`).
+
 * Create exploratory plots and compare the distribution of weights between babies born to nosmkokers and babies born to smokers.
 
+**Smokers**
+```{r warning=FALSE,message=FALSE}
+EDA.hist(Girls$Weight[Girls$Smoker == "Yes"])
+EDA.qq(Girls$Weight[Girls$Smoker == "Yes"])
+```
+
+**Non-Smokers**
+```{r warning=FALSE,message=FALSE}
+EDA.hist(Girls$Weight[Girls$Smoker == "No"])
+EDA.qq(Girls$Weight[Girls$Smoker == "No"])
+```
 
 * Find a 95% $t$ confidence interval for the difference in mean weights between babies born to nonsmokers and smokers.  Give a sentence interpreting this interval.
 
-
 > SOLUTION:
 
-**Prob3** - Import the `FlightDelays` data set into `R`.  Although the data represent all flights for United Airlines and American Airlines in May and June 2009, assume for this exercise that these flights are a sample from all flights flown by the two airlines under similar conditions.  We will compare the lengths of flight delays betwen the two airlines.  
+```{r}
+girls_t2 <- t.test(Girls$Weight[Girls$Smoker == "Yes"],Girls$Weight[Girls$Smoker == "No"])
+```
+
+We are 95% confident that the difference in weights between girls born to smokers and girls born to non-smokers is within (`r girls_t2$conf.int[1]`, `r girls_t2$conf.int[2]`).
+
+**Prob3** - Import the `FlightDelays` data set into `R`.  Although the data represent all flights for United Airlines and American Airlines in May and June 2009, assume for this exercise that these flights are a sample from all flights flown by the two airlines under similar conditions.  We will compare the lengths of flight delays betwen the two airlines.
+
+```{r}
+Flight <- importData("FlightDelays")
+head(Flight)
+```
+
 
 * Create exploratory plots of the lengths of delays for the two airlines.
+
+**United Airlines**
+```{r warning=FALSE,message=FALSE}
+EDA.hist(Flight$Delay[Flight$Carrier == "UA"])
+EDA.qq(Flight$Delay[Flight$Carrier == "UA"])
+```
+
+**American Airlines**
+```{r warning=FALSE,message=FALSE}
+EDA.hist(Flight$Delay[Flight$Carrier == "AA"])
+EDA.qq(Flight$Delay[Flight$Carrier == "AA"])
+```
+
 
 * Find a 95% $t$ confidence interval for the difference  in mean flight delays between the two airlines and interpret this interval.
 
 
 > SOLUTION: 
 
+```{r}
+flight_t <- t.test(Flight$Delay[Flight$Carrier == "UA"],Flight$Delay[Flight$Carrier == "AA"])
+```
+
+We are 95% confident that the difference in delay times between United Airlines and American Airlines is within (`r flight_t$conf.int[1]`, `r flight_t$conf.int[2]`).
+
 **Prob4** - Run a simulation to see if the $t$ ratio $T = (\bar{X} -\mu)/(S/\sqrt{n})$ has a $t$ distribution or even an approximate $t$ distirubiton when the samples are drawn from a nonnormal distribution.  Be sure to superimpose the appropriate $t$ density curve over the density of your simulated $T$.  Try two different nonnormal distributions $\left( Unif(a = 0, b = 1), Exp(\lambda = 1) \right)$ and remember to see if sample size makes a difference (use $n = 15$ and $n=500$).
 
+```{r}
+n <- 15
+mu <- 0
+N <- rexp(n)
+#Tb <- mean(N)-mu/sqrt(n)
+curve(dt(x,n-1),-5,5)
+curve(dexp(x,1),add=T)
+
+```
 
 
 **Prob5** - One question is the 2002 General Social Survey asked participants whom they voted for in the 2000 election.  Of the 980 women who voted, 459 voted for Bush.  Of the 759 men who voted, 426 voted for Bush.
