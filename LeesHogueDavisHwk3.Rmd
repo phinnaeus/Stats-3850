@@ -3,7 +3,7 @@ require(ggplot2)
 
 ## define colors for easy changing 
 primaryColor = "red"
-secondaryColor = "blue"
+secondaryColor = "slateblue"
 
 EDA.hist <- function(data, col1=primaryColor, col2=secondaryColor) {
   p <- ggplot(as.data.frame(data),aes(x=data),color=col1)
@@ -18,6 +18,27 @@ EDA.qq <- function(data, col1=primaryColor, col2=secondaryColor) {
 importData <- function(dataset) {
   url = url(paste("http://www1.appstate.edu/~arnholta/Data/", dataset, ".csv", sep=""))
   read.csv(file=url)
+}
+
+tboot <- function(data,B=10^4,conf.level=0.95){
+  alpha <- 1 - conf.level
+  xbar <- mean(data)
+  S <- sd(data)
+  n <- length(data)
+  xbarstar <- numeric(B)
+  Sstar <- numeric(B)
+  for(i in 1:B){
+    xs <-sample(data,size=length(data),replace=T)
+    xbarstar[i] <- mean(xs)
+    Sstar[i] <- sd(xs)
+  }
+  
+  TS <- (xbarstar - xbar)/(Sstar/sqrt(n))
+  Q1 <- quantile(TS, prob = alpha/2)
+  Q2 <- quantile(TS, prob = 1- alpha/2)
+  CI <- c(xbar - Q2*S/sqrt(n), xbar - Q1*S/sqrt(n))
+  names(CI) <- NULL
+  CI
 }
 ```
 
@@ -242,26 +263,56 @@ test <- prop.test(56,350)
 
 * Compute 95% confidence interval for the difference in proportions of students who break out in hives by using or not using this drug and give a sentence interpreting this interval.
 
-> SOLUTION:
+```{r}
+x <- c(34,56)
+n <- c(350,350)
+test <- prop.test(x,n)
+```
+
+> SOLUTION: We are 95% confident that the difference in the proportion of students taking the placebo who break out in hives to the proportion ofstudents taking the placebo who break out in hives is within (`r test$conf.int[1]`, `r test$conf.int[2]`). Since zero is not included in the interval we have sufficient statistical evidence to reject the null hypothesis that the drug and the placebo will effect the student with equal probability.
 
 **Prob8** - An article in the March 2003 *New England Journal of Medicine* describes a study to see if aspirin is effective in reducing the incidence of colorectal adenomas, a precursor to most colorectal cancers (Sandler et al. (2003)).  Of 517 patients in the study, 259 were randomly assigned to receive aspirin and the remaining 258 received a placebo.  One or more adenomas were found in 44 of the aspirin group and 70 in the placebo group.  Find a 95% one-sided upper bound for the difference in proportions $(p_A - p_P)$ and interpret your interval.
 
-> SOLUTION:
+```{r}
+x <- c(44, 70)
+n <- c(259, 258)
+test <- prop.test(x, n, alternative="less")
+```
+
+> SOLUTION: We are 95% confident that the difference in adenomas found in the aspirin group and the placebo group is less than or equal to `r test$conf[2]`.
 
 **Prob9** - The data set `Bangladesh` has measurements on water quality from 271 wells in Bangladsesh.  There are two missing values in the chlorine variable.  Use the following `R` code to remove these two observations.
 
 `> chlorine <- with(Bangladesh, Chlorine[!is.na(Chlorine)])`
 
+```{r}
+Banga <- importData("Bangladesh")
+chlorine <- with(Banga, Chlorine[!is.na(Chlorine)])
+```
+
 
 * Compute the numeric summaries of the cholorine levels and create a plot and comment on the distribution.
 
-> SOLUTION:
+```{r}
+EDA.hist(chlorine)
+EDA.qq(chlorine)
+```
+
+> SOLUTION: The average cholorine level from 271 wells in Bangladsesh is `r mean(chlorine)` and has a standard deviation of `r sd(chlorine)`. The distribution is skewed to the right, and appears to be exponential. 
 
 * Find a 95% $t$ confidence interval for the mean $\mu$ of chlorine levels in Bangladesh wells.
 
-> SOLUTION:
+```{r}
+test <- t.test(chlorine)
+```
+
+> SOLUTION: We are 95% confident that the mean $\mu$ of chlorine levels in Bangladesh wells is within (`r test$conf.int[1]`, `r test$conf.int[2]`).
 
 * Find a 95% bootstrap percentile and bootstrap $t$ confidence intervals for the mean chlorine level and compare results.  Which confidence interval will you report?
+
+```{r}
+test <- tboot(chlorine)
+```
 
 > SOLUTION:
 
@@ -271,13 +322,28 @@ test <- prop.test(56,350)
 
 **Prob10** - The data set `MnGroundwater` has measurements on water quality of 895 randomly selected wells in Minnesota.
 
+```{r}
+Water <- importData("MnGroundwater")
+head(Water)
+```
+
+
 * Create a histogram, a density, and a normal quantile plot of the alkalinity and comment on the distribution.
 
-> SOLUTION:
+```{r}
+EDA.hist(Water$Alkalinity)
+EDA.qq(Water$Alkalinity)
+```
+
+> SOLUTION: The distribution of Alkalinity across groundwater wells in Minnesota is approximately normal with a mean of `r mean(Water$Alkalinity)` and a standard deviation of `r sd(Water$Alkalinity)`.
 
 * Find the 95% $t$ confidence interval for the mean $\mu$ of alkalinity levels in Minnesota wells.
 
-> SOLUTION:
+```{r}
+test <- t.test(water$Alkalinity)
+```
+
+> SOLUTION: We are 95% confident that the mean $\mu$ of alkalinity levels in Minnesota wells is within (`r test$conf.int[1]`, `r test$conf.int[2]`).
 
 * Find the 95% bootstrap percentile and bootstrap $t$ confidence intervals for the mean alkalinity level and compare the results.  Which confidence interval will you report?
 
