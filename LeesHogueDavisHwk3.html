@@ -192,7 +192,7 @@ hljs.initHighlightingOnLoad();
 
 <p><strong>Due No Later than 5pm, November 15, 2012</strong></p>
 
-<pre><code>[1] &quot;2012-11-08 14:26:24 EST&quot;
+<pre><code>[1] &quot;2012-11-13 13:23:50 EST&quot;
 </code></pre>
 
 <p><strong>Prob1</strong> - Import the data set <code>Spruce</code> into <code>R</code>.</p>
@@ -421,6 +421,16 @@ EDA.qq(Flight$Delay[Flight$Carrier == &quot;AA&quot;])
 
 <p><strong>Prob4</strong> - Run a simulation to see if the \( t \) ratio \( T = (\bar{X} -\mu)/(S/\sqrt{n}) \) has a \( t \) distribution or even an approximate \( t \) distirubiton when the samples are drawn from a nonnormal distribution.  Be sure to superimpose the appropriate \( t \) density curve over the density of your simulated \( T \).  Try two different nonnormal distributions \( \left( Unif(a = 0, b = 1), Exp(\lambda = 1) \right) \) and remember to see if sample size makes a difference (use \( n = 15 \) and \( n=500 \)).</p>
 
+<pre><code class="r">n &lt;- 15
+mu &lt;- 0
+N &lt;- rexp(n)
+# Tb &lt;- mean(N)-mu/sqrt(n)
+curve(dt(x, n - 1), -5, 5)
+curve(dexp(x, 1), add = T)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-19"/> </p>
+
 <p><strong>Prob5</strong> - One question is the 2002 General Social Survey asked participants whom they voted for in the 2000 election.  Of the 980 women who voted, 459 voted for Bush.  Of the 759 men who voted, 426 voted for Bush.</p>
 
 <ul>
@@ -428,7 +438,7 @@ EDA.qq(Flight$Delay[Flight$Carrier == &quot;AA&quot;])
 </ul>
 
 <blockquote>
-<p>SOLUTION: </p>
+<p>SOLUTION: We are 95% confident that the proportion of women who voted for Bush from the 2002 General Social Survey  is within (<code>0.4368</code>, <code>0.5002</code>)</p>
 </blockquote>
 
 <ul>
@@ -436,7 +446,7 @@ EDA.qq(Flight$Delay[Flight$Carrier == &quot;AA&quot;])
 </ul>
 
 <blockquote>
-<p>SOLUTION:  </p>
+<p>SOLUTION: We are 95% confident that the proportion of men who voted for Bush from the 2002 General Social Survey is is within (<code>0.5251</code>, <code>0.5968</code>).  The intervals for the proportion of men who voted for Bush and the proportion of women who voted for Bush do not overlap; the male proportion is greater than the female proportion.  Thus we have sufficient statistical evidence to reject the null hypothesis that men and women vote for Bush with equal probability.</p>
 </blockquote>
 
 <p><strong>Prob6</strong> - A retail store wishes to conduct a marketing survey of its customers to see if customers would favor longer store hours. How many people should be in their sample if the marketers want their margin of error to be at most 3% with 95% confidence, assuming</p>
@@ -445,8 +455,13 @@ EDA.qq(Flight$Delay[Flight$Carrier == &quot;AA&quot;])
 <li>they have no preconceived idea of how customers will respond, and</li>
 </ul>
 
+<pre><code class="r">error &lt;- 0.03
+UCI &lt;- 0.975
+n &lt;- ceiling((qnorm(UCI)/error)^2)
+</code></pre>
+
 <blockquote>
-<p>SOLUTION: </p>
+<p>SOLUTION: To provide a confidenced level of 95% and a margin of error of a maximum 3%, the marketers should get responses from a minimum <code>4269</code> people.</p>
 </blockquote>
 
 <ul>
@@ -463,16 +478,22 @@ EDA.qq(Flight$Delay[Flight$Carrier == &quot;AA&quot;])
 <li>Compute a 95% confidence interval for the proportion of students taking the drug who break out in hives.</li>
 </ul>
 
+<pre><code class="r">test &lt;- prop.test(34, 350)
+</code></pre>
+
 <blockquote>
-<p>SOLUTION: </p>
+<p>SOLUTION: We are 95% confident that the proportion of students taking the drug who break out in hives is within (<code>0.0691</code>, <code>0.1343</code>)</p>
 </blockquote>
 
 <ul>
 <li>Compute a 95% confidence interval for the proportion of students taking the placebo who break out in hives.</li>
 </ul>
 
+<pre><code class="r">test &lt;- prop.test(56, 350)
+</code></pre>
+
 <blockquote>
-<p>SOLUTION: </p>
+<p>SOLUTION: We are 95% confident that the proportion of students taking the placebo who break out in hives is within (<code>0.124</code>, <code>0.2036</code>)</p>
 </blockquote>
 
 <ul>
@@ -480,7 +501,7 @@ EDA.qq(Flight$Delay[Flight$Carrier == &quot;AA&quot;])
 </ul>
 
 <blockquote>
-<p>SOLUTION:  </p>
+<p>SOLUTION: Due to the intervals overlapping, there is insufficient evidence to support the alternative hypothesis that the drug has an effect on hives break-out rates.</p>
 </blockquote>
 
 <ul>

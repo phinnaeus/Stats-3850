@@ -192,39 +192,53 @@ curve(dexp(x,1),add=T)
 
 * Find a 95% confidence interval for the proportion of women who voted for Bush.
 
-> SOLUTION: 
+> SOLUTION: We are 95% confident that the proportion of women who voted for Bush from the 2002 General Social Survey  is within (`r prop.test(459,980)$conf.int[1]`, `r prop.test(459,980)$conf.int[2]`)
 
 * Find a 95% confidence interval for the proportion of men who voted for Bush.  Do the intervals for the men and women overlap?  What, if anything, can you conclude about gender difference in voter preference?
 
-> SOLUTION:  
+> SOLUTION: We are 95% confident that the proportion of men who voted for Bush from the 2002 General Social Survey is is within (`r prop.test(426,759)$conf.int[1]`, `r prop.test(426,759)$conf.int[2]`).  The intervals for the proportion of men who voted for Bush and the proportion of women who voted for Bush do not overlap; the male proportion is greater than the female proportion.  Thus we have sufficient statistical evidence to reject the null hypothesis that men and women vote for Bush with equal probability.
 
 
 **Prob6** - A retail store wishes to conduct a marketing survey of its customers to see if customers would favor longer store hours. How many people should be in their sample if the marketers want their margin of error to be at most 3% with 95% confidence, assuming
 
   * they have no preconceived idea of how customers will respond, and
-  
-> SOLUTION: 
-  
-  * a previous survey indicated that about 65% of customers favor longer store hours.
 
+```{r}
+error <- 0.03
+UCI <- 0.975
+n <- ceiling((qnorm(UCI)/error)^2)
+```
+
+> SOLUTION: To provide a confidenced level of 95% and a margin of error of a maximum 3%, the marketers should get responses from a minimum `r n` people.
+
+  * a previous survey indicated that about 65% of customers favor longer store hours.
 
 > SOLUTION: 
 
 **Prob7** - Suppose researchers wish to study the effectiveness of a new drug to alleviate hives due to math anxiety.  Seven hundred math students are randomly assigned to take either this drug or a placebo.  Suppose 34 of the 350 students who took the drug break out in hives compared to 56 of the 350 students who took the placebo.
 
+
 * Compute a 95% confidence interval for the proportion of students taking the drug who break out in hives.
 
+```{r}
+test <- prop.test(34,350)
+```
 
-> SOLUTION: 
+
+> SOLUTION: We are 95% confident that the proportion of students taking the drug who break out in hives is within (`r test$conf.int[1]`, `r test$conf.int[2]`)
+ 
 
 * Compute a 95% confidence interval for the proportion of students taking the placebo who break out in hives.
 
+```{r}
+test <- prop.test(56,350)
+```
 
-> SOLUTION: 
+> SOLUTION: We are 95% confident that the proportion of students taking the placebo who break out in hives is within (`r test$conf.int[1]`, `r test$conf.int[2]`)
 
 * Do the intervals overlap?  What, if anything, can you conclude about the effectiveness of the drug?
 
-> SOLUTION:  
+> SOLUTION: Due to the intervals overlapping, there is insufficient evidence to support the alternative hypothesis that the drug has an effect on hives break-out rates.
 
 * Compute 95% confidence interval for the difference in proportions of students who break out in hives by using or not using this drug and give a sentence interpreting this interval.
 
