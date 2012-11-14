@@ -1,9 +1,10 @@
 ```{r echo=FALSE,warning=FALSE,message=FALSE}
 require(ggplot2)
+require(PASWR)
 
 ## define colors for easy changing 
 primaryColor = "red"
-secondaryColor = "slateblue"
+secondaryColor = "blue"
 
 EDA.hist <- function(data, col1=primaryColor, col2=secondaryColor) {
   p <- ggplot(as.data.frame(data),aes(x=data),color=col1)
@@ -83,13 +84,13 @@ We are 95% confident that the change in height for a spruce tree in a 5 year per
 
 * Create exploratory plots to compare the distributions of the variable `Ht.change` for the seedlings in the fertilized and nonfertilized plots.
 
-**Without Fertilizer**
+**With Fertilizer**
 ```{r warning=FALSE,message=FALSE}
 EDA.hist(Spruce$Ht.change[Spruce$Fertilizer == "F"])
 EDA.qq(Spruce$Ht.change[Spruce$Fertilizer == "F"])
 ```
 
-**With Fertilizer**
+**Without Fertilizer**
 ```{r warning=FALSE,message=FALSE}
 EDA.hist(Spruce$Ht.change[Spruce$Fertilizer != "F"])
 EDA.qq(Spruce$Ht.change[Spruce$Fertilizer != "F"])
@@ -100,7 +101,7 @@ EDA.qq(Spruce$Ht.change[Spruce$Fertilizer != "F"])
 > SOLUTION:
 
 ```{r}
-spruce_t2 <- t.test(Spruce$Ht.change[Spruce$Fertilizer != "T"],Spruce$Ht.change[Spruce$Fertilizer != "F"], alternative="greater")
+spruce_t2 <- t.test(Spruce$Ht.change~Spruce$Fertilizer,alternative="greater")
 ```
 
 We are 95% confident that the difference in heights between spruce trees that were fertilized and those that were not during a 5 year period is at least `r spruce_t2$conf.int[1]`.
@@ -199,12 +200,14 @@ We are 95% confident that the difference in delay times between United Airlines 
 **Prob4** - Run a simulation to see if the $t$ ratio $T = (\bar{X} -\mu)/(S/\sqrt{n})$ has a $t$ distribution or even an approximate $t$ distirubiton when the samples are drawn from a nonnormal distribution.  Be sure to superimpose the appropriate $t$ density curve over the density of your simulated $T$.  Try two different nonnormal distributions $\left( Unif(a = 0, b = 1), Exp(\lambda = 1) \right)$ and remember to see if sample size makes a difference (use $n = 15$ and $n=500$).
 
 ```{r}
+########################## HELP!!!! ################################
 n <- 15
 mu <- 0
 N <- rexp(n)
 #Tb <- mean(N)-mu/sqrt(n)
 curve(dt(x,n-1),-5,5)
 curve(dexp(x,1),add=T)
+########################## HELP!!!! ################################
 
 ```
 
@@ -217,7 +220,7 @@ curve(dexp(x,1),add=T)
 
 * Find a 95% confidence interval for the proportion of men who voted for Bush.  Do the intervals for the men and women overlap?  What, if anything, can you conclude about gender difference in voter preference?
 
-> SOLUTION: We are 95% confident that the proportion of men who voted for Bush from the 2002 General Social Survey is is within (`r prop.test(426,759)$conf.int[1]`, `r prop.test(426,759)$conf.int[2]`).  The intervals for the proportion of men who voted for Bush and the proportion of women who voted for Bush do not overlap; the male proportion is greater than the female proportion.  Thus we have sufficient statistical evidence to reject the null hypothesis that men and women vote for Bush with equal probability.
+> SOLUTION: We are 95% confident that the proportion of men who voted for Bush from the 2002 General Social Survey is is within (`r prop.test(426,759)$conf.int[1]`, `r prop.test(426,759)$conf.int[2]`).  The intervals for the proportion of men who voted for Bush and the proportion of women who voted for Bush do not overlap but since we tested the proportion of means seperately, we cannot conclude anything about their apparent difference. To be able to conclude something, we would need to test a difference of proportions explicitly.
 
 
 **Prob6** - A retail store wishes to conduct a marketing survey of its customers to see if customers would favor longer store hours. How many people should be in their sample if the marketers want their margin of error to be at most 3% with 95% confidence, assuming
@@ -259,7 +262,7 @@ test <- prop.test(56,350)
 
 * Do the intervals overlap?  What, if anything, can you conclude about the effectiveness of the drug?
 
-> SOLUTION: Due to the intervals overlapping, there is insufficient evidence to support the alternative hypothesis that the drug has an effect on hives break-out rates.
+> SOLUTION: Despite the intervals overlapping, we cannot conclude anything.
 
 * Compute 95% confidence interval for the difference in proportions of students who break out in hives by using or not using this drug and give a sentence interpreting this interval.
 
@@ -311,7 +314,9 @@ test <- t.test(chlorine)
 * Find a 95% bootstrap percentile and bootstrap $t$ confidence intervals for the mean chlorine level and compare results.  Which confidence interval will you report?
 
 ```{r}
+########################## HELP!!!! ################################
 test <- tboot(chlorine)
+########################## HELP!!!! ################################
 ```
 
 > SOLUTION:
@@ -319,6 +324,11 @@ test <- tboot(chlorine)
 * *Johnson's $t$ confidence interval* adjusts for skewness by shifting endpoints right or left for positive or negative skewness, respectively.  The interval is $\bar{X} + \hat{\kappa_3}/(6\sqrt{n})(1 + 2q^2) \pm q(S/\sqrt{n})$, where $\hat{\kappa_3}$ is a sample estimate of the population skewness $E(X - \mu)/\sigma^3$ and $q$ denotes the $1 - \alpha/2$ quantile for a $t$ distribution with $n-1$ degrees of freedom.  Calculate Johnson's $t$ interval for the arsenic data (in `Bangladesh`) and compare with the formula $t$ and bootstrap $t$ intervals.
 
 > SOLUTION:
+
+```{r}
+skewness(Banga$Arsenic, na.rm = T)
+```
+
 
 **Prob10** - The data set `MnGroundwater` has measurements on water quality of 895 randomly selected wells in Minnesota.
 
@@ -340,7 +350,7 @@ EDA.qq(Water$Alkalinity)
 * Find the 95% $t$ confidence interval for the mean $\mu$ of alkalinity levels in Minnesota wells.
 
 ```{r}
-test <- t.test(water$Alkalinity)
+test <- t.test(Water$Alkalinity)
 ```
 
 > SOLUTION: We are 95% confident that the mean $\mu$ of alkalinity levels in Minnesota wells is within (`r test$conf.int[1]`, `r test$conf.int[2]`).
