@@ -230,12 +230,16 @@ curve(dexp(x,1),add=T)
 ```{r}
 error <- 0.03
 UCI <- 0.975
-n <- ceiling((qnorm(UCI)/error)^2)
+(.5*(1-.5))/(.03/1.96)^2
 ```
 
 > SOLUTION: To provide a confidenced level of 95% and a margin of error of a maximum 3%, the marketers should get responses from a minimum `r n` people.
 
   * a previous survey indicated that about 65% of customers favor longer store hours.
+
+```{r}
+(.65*(1-.65))/(.03/1.96)^2
+```
 
 > SOLUTION: 
 
