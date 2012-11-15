@@ -192,7 +192,7 @@ hljs.initHighlightingOnLoad();
 
 <p><strong>Due No Later than 5pm, November 15, 2012</strong></p>
 
-<pre><code>[1] &quot;2012-11-15 12:02:43 EST&quot;
+<pre><code>[1] &quot;2012-11-15 12:30:18 EST&quot;
 </code></pre>
 
 <p><strong>Prob1</strong> - Import the data set <code>Spruce</code> into <code>R</code>.</p>
@@ -457,29 +457,24 @@ curve(dexp(x, 1), add = T)
 </ul>
 
 <pre><code class="r">error &lt;- 0.03
-UCI &lt;- 0.975
-(0.5 * (1 - 0.5))/(0.03/1.96)^2
-</code></pre>
-
-<pre><code>[1] 1067
+p_sqiggle &lt;- 0.5
+sample_size &lt;- ceiling((p_sqiggle * (1 - p_sqiggle))/(error/1.96)^2)
 </code></pre>
 
 <blockquote>
-<p>SOLUTION: To provide a confidenced level of 95% and a margin of error of a maximum 3%, the marketers should get responses from a minimum <code>15</code> people.</p>
+<p>SOLUTION: To provide a confidenced level of 95% and a margin of error of a maximum 3%, the marketers should get responses from a minimum <code>1068</code> people.</p>
 </blockquote>
 
 <ul>
 <li>a previous survey indicated that about 65% of customers favor longer store hours.</li>
 </ul>
 
-<pre><code class="r">(0.65 * (1 - 0.65))/(0.03/1.96)^2
-</code></pre>
-
-<pre><code>[1] 971.1
+<pre><code class="r">p_sqiggle &lt;- 0.65
+sample_size &lt;- ceiling((p_sqiggle * (1 - p_sqiggle))/(error/1.96)^2)
 </code></pre>
 
 <blockquote>
-<p>SOLUTION: </p>
+<p>SOLUTION: Given the knowledge of the survey where 65% of respondants favored longer hours, the store should use a sample size of <code>972</code> people.</p>
 </blockquote>
 
 <p><strong>Prob7</strong> - Suppose researchers wish to study the effectiveness of a new drug to alleviate hives due to math anxiety.  Seven hundred math students are randomly assigned to take either this drug or a placebo.  Suppose 34 of the 350 students who took the drug break out in hives compared to 56 of the 350 students who took the placebo.</p>
@@ -581,13 +576,17 @@ this.
 <li>Find a 95% bootstrap percentile and bootstrap \( t \) confidence intervals for the mean chlorine level and compare results.  Which confidence interval will you report?</li>
 </ul>
 
-<pre><code class="r">########################## HELP!!!! ################################
-test &lt;- tboot(chlorine)
-########################## HELP!!!! ################################
+<pre><code class="r">test &lt;- tboot(chlorine)
+test
+</code></pre>
+
+<pre><code>      boot.conf percentile.conf
+97.5%     56.43           54.66
+2.5%     112.28          105.39
 </code></pre>
 
 <blockquote>
-<p>SOLUTION:</p>
+<p>SOLUTION: We would report the bootstrap confidence interval (<code>56.4291, 112.278</code>) because it accounts for skewness.</p>
 </blockquote>
 
 <ul>
