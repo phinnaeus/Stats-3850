@@ -192,7 +192,7 @@ hljs.initHighlightingOnLoad();
 
 <p><strong>Due No Later than 5pm, November 15, 2012</strong></p>
 
-<pre><code>[1] &quot;2012-11-15 12:30:18 EST&quot;
+<pre><code>[1] &quot;2012-11-15 13:51:50 EST&quot;
 </code></pre>
 
 <p><strong>Prob1</strong> - Import the data set <code>Spruce</code> into <code>R</code>.</p>
@@ -546,13 +546,7 @@ chlorine &lt;- with(Banga, Chlorine[!is.na(Chlorine)])
 </ul>
 
 <pre><code class="r">EDA.hist(chlorine)
-</code></pre>
-
-<pre><code>stat_bin: binwidth defaulted to range/30. Use &#39;binwidth = x&#39; to adjust
-this.
-</code></pre>
-
-<pre><code class="r">EDA.qq(chlorine)
+EDA.qq(chlorine)
 </code></pre>
 
 <p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-27"/> <img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-27"/> </p>
@@ -597,10 +591,8 @@ test
 <p>SOLUTION:</p>
 </blockquote>
 
-<pre><code class="r">skewness(Banga$Arsenic, na.rm = T)
-</code></pre>
-
-<pre><code>[1] 4.762
+<pre><code class="r">skew &lt;- skewness(Banga$Arsenic, na.rm = T)
+test &lt;- tboot(Banga$Arsenic)
 </code></pre>
 
 <p><strong>Prob10</strong> - The data set <code>MnGroundwater</code> has measurements on water quality of 895 randomly selected wells in Minnesota.</p>
@@ -630,13 +622,7 @@ head(Water)
 </ul>
 
 <pre><code class="r">EDA.hist(Water$Alkalinity)
-</code></pre>
-
-<pre><code>stat_bin: binwidth defaulted to range/30. Use &#39;binwidth = x&#39; to adjust
-this.
-</code></pre>
-
-<pre><code class="r">EDA.qq(Water$Alkalinity)
+EDA.qq(Water$Alkalinity)
 </code></pre>
 
 <p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-32"/> <img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-32"/> </p>
@@ -666,36 +652,127 @@ this.
 
 <p><strong>Prob11</strong> Consider the babies born in Texas in 2004 (<code>TXBirths2004</code>).  We will compare the weights of babies born to nonsmokers and smokers.</p>
 
+<pre><code class="r">Texas &lt;- importData(&quot;TXBirths2004&quot;)
+head(Texas)
+</code></pre>
+
+<pre><code>  ID MothersAge Smoker Gender Weight Gestation Number Multiple
+1  1      20-24     No   Male   3033        39      1       No
+2  2      20-24     No   Male   3232        40      1       No
+3  3      25-29     No Female   3317        37      1       No
+4  4      25-29     No Female   2560        36      1       No
+5  5      15-19     No Female   2126        37      1       No
+6  6      30-34     No Female   2948        38      1       No
+</code></pre>
+
 <ul>
 <li>How many nonsmokers and smokers are there in this data set?</li>
 </ul>
 
+<pre><code class="r">smokers &lt;- sum(Texas$Smoker == &quot;Yes&quot;)
+nonsmokers &lt;- sum(Texas$Smoker == &quot;No&quot;)
+</code></pre>
+
 <blockquote>
-<p>SOLUTION:</p>
+<p>SOLUTION: In this data set of <code>1587</code> texans, there are <code>90</code> smokers and <code>1497</code> non-smokers.</p>
 </blockquote>
 
 <ul>
 <li>Create exploratory plots of the weights for the two groups and comment on the distributions.</li>
 </ul>
 
+<pre><code class="r">ggplot(data = Texas, aes(x = Weight)) + geom_histogram() + facet_grid(Smoker ~ 
+    .)
+</code></pre>
+
+<pre><code>stat_bin: binwidth defaulted to range/30. Use &#39;binwidth = x&#39; to adjust
+this.
+</code></pre>
+
+<pre><code>stat_bin: binwidth defaulted to range/30. Use &#39;binwidth = x&#39; to adjust
+this.
+</code></pre>
+
+<pre><code class="r">ggplot(data = Texas, aes(sample = Weight)) + stat_qq() + facet_grid(Smoker ~ 
+    .)
+smokersEDA &lt;- c(mean(Texas$Weight[Texas$Smoker == &quot;Yes&quot;]), sd(Texas$Weight[Texas$Smoker == 
+    &quot;Yes&quot;]))
+nonsmokersEDA &lt;- c(mean(Texas$Weight[Texas$Smoker == &quot;No&quot;]), sd(Texas$Weight[Texas$Smoker == 
+    &quot;No&quot;]))
+</code></pre>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAABEVBMVEUAAAAAAC4AADoAAFIAAGYALnMAOmYAOpAAUpEAZpAAZrYuAAAuc68zMzM6AAA6AGY6OmY6OpA6ZrY6kNtSAABSAFJSkcxmAABmADpmAGZmOjpmOpBmZgBmZmZmtv9zLi5zLlJzr5Fzr69zr8x/f39/f5V/f6t/lcF/q9aQOgCQOjqQOmaQtpCQ2/+RUgCRUi6RUlKRzJGRzK+RzMyVf3+VlcGVweurf6urlZWr1v+vcy6vzMy2ZgC2Zjq2///BlX/BlZXBlavBwdbB6//MkVLMr3PMzJHMzMzWq3/W///bkDrb/9vb///l5eXrwZXr1qvr///y8vL/tmb/1qv/25D/68H//7b//9b//9v//+v///9UsTr7AAAACXBIWXMAAAsSAAALEgHS3X78AAAH5klEQVR4nO2dC3/bNBTFTTdY6VoK62sbUF4BGiDjUQi0dN2ArmlDG1gSstTf/4Mgy2lqx48jy7Jlx+dsy7Ls/CT736srO1JuHJdKlWP7AKouAgIiICACAiIgIAICIiAgAgIiICACAiIgIAICIiCgzICuF/U68sr1ddSl7MvRnG6vvZAIiICyNkdAwEdAwLd0gDakzPW6TIA27mSu17oDCvIgIAJCvtoDeq0iNZeiz+cRfB54wUSvjCDgIyDgWw5AEZnrlYCAj4CAj4CAb0kBRTEREAHF2ggI2AgI2KoK6M2vl6570Wp9+Zd4FA8EFNao9dWle/PSAzP6+l/xm4BCuvnz5o9L981vP7cO3EHXD6eWp8SIK0ypgEx0oDnEPEAjEUWDo8GR/Icv3chYtghy50xG3dsIIqBoBHVdEUHMQckRJGaxrstZLIt0T5yATBxqrI2AgI2AgI2AgI2AgI2AgI2AgI2AgK1mgLRWv3P5UgGZ6JURBHpdakBBTAREQLE2AgI2AgI2AgI2AgI2AgI2AgI2AgI2AgK2qgKabV7wFnwqvOxjD5DcvOAvGVZ54dAaIH/zgr/oXOXNC77yddA733Y83TvMNMQkILltocqbF8xF0LO3vsiWg6IRtMyAjp31rElabl5oSA569XA1+yw227zQhFlMLwclSPfEqwyIF4rpvTYAkC99QGdigO0SUFKvvfOdQ/mHgOJ7rS8gZTRNHWKlAaprkiagREAZ0VQJkNb2gMw+PUCavTKCQK8EBHolINArAYFeCQj0SkCgVwICvRIQ6JWAQK8EBHolINArAYFe8wCyVXmhLoCsVV6oCyBrlRf0AGkqByBrlRfqEkESko3KC1qApDR6zRNBtiov1AWQtcoLtQEUle6JExA4cQICJ05A4MRVffpoYjEREAEREAEREAEFlG9TAvaZAbRsmxfMUAnIYgQREAFVCpBxNASUDZNhQJMnp/NHAooAmuw5vh5cEVBaBKWq2YAUZADQ/OiLBnTXkTFAQznE7hebg0qAUhSgyd5+aRFUT0DxOcjwqkbJgCKY8gyxk60YPmnrYqoHlW4sQYGDyDXE4nKQ5cIChSv3LGa5sIByc9Y2UFkuLFAlQPFDzHJhgSoB8tVfzNR2CwtUD1CZN6smmysN0DDtSrppis1B8HK6Qcp8s9o02X5H0WRzZeSgaRu8X9ZwQNO2N8P3S3xH0WRzZVwolv6etMnmGEHAxxwEfNZuVgmIgJQBDcVVdH+lQ0AJgCaPPTbjTc5iCYCmbe82bJiWpYveQFW8LdcGKnm3mnozb/JHXr8IUpDJMyIgDR8BAR8BAR8BAR8BAR8BAR8BAR8BAR8BAV99AM2+mcVOcROt5soFJL+ZxVpxE63mSgXkfzOLteImpUpziMnv1bBV3ESruZJz0C0TK8VNtJqzAMhacROt5mxEkK3iJlrN8ToI+AgI+AgI+AgI+AgI+AgI+AgI+AgI+AgI+AgI+KoBqNBtBKXY6lj9xUxz1Yggk2dEQBo+AgI+AgI+AgI+AgI+AgI+AgI+AgI+i4B+qOnXqZcE6Hx7N1sEzTYveAs+TVj2ObuX8bue5eYFf8lw6RcOz7cdZzVjDvI3L/iLzo3YvHD29u8Zk7QEJLctNGPzwquHGXNQNIKWG1DmWUxuXmhGDtK7DpptXmjELHbmOM4uLxSTfL3zncPvP9vJOM0TEAHdSgyx1WccYsk+3qwCX693vHo2v5QmoLgc9NMnn3/KHJTkE4B+FL8IKMknhpizfrzOIZbkM5ukC10lL8XGtfmszREQ8BEQ8BEQ8BEQ8BEQ8BEQ8BEQ8BEQ8BEQ8BEQ8BEQ8OUBxMoL6YBYeQEAYuUFAIiVFxSSNCsvpMJh5YX08GHlBV4HERD0ERDwERDwERDwERDwERDwERDwERDwmQVU6DaCUmzcvJC1OQICPgICPgICvroDCnwdenpzBASaIyDQHAHNnic11yRAG2lKao6AQoCiI4+AkmDl7LUGgCJDRxlQEJM9QIUv++QFlBxYpQAysnAYHRERQAWpeEDcvADEzQsIEDcvpIubF5C4ecG0VFO5os+sTdknRUBABAREQEDFAFoiERAQAQEREBABAZkEFKndGbwCn+vmRaslblyg76LVOlJoTt4qKtiCH8tJbW5BBgFFaneG7uHubAfi2I6gT9gEcNyc6Lar0GvwYzmpzS3KHKBo7c7QuwAhDY5UfAuGeNt/v/zTVeg1+LEcdHQhmRxii7U7Q+8jBSWiQ8F3IUID2rwoU7CFPpYDji4s44AUfkYXB67az3LQhbaB9y4ntkmNFH0hmQakkA1eHLkK2UB+jqarkjRGKjko+LEcSzkopnZn0uzkfUJGxXegNIuNVGcxJd+ieB0EREBABAREQEAVAXSy77pDx3tYm70y3jwNP7t7oVRVBFB/S/z5eMt/siACEhp/cDX95jvvoeNO9pz7p5KHePbO08548yPH2fdfLV8VATR5cjr58O9vT8Xf7smW21+TgMSz4Upn/J7468FVsyNIRM74kchE4mHyuOPxEjw8Wt5/bMp4ajYgt7/f33eHWyIFibHkOCseFjHuCOhWw7XnHXf86LmMHu8FRlBYk6cyXN4XEE7mKWeWgwhIaNr2LoBOvAcxxlY6t7PYu/MImrabPIslylLc3KnKgKZtL1tbPogqA6qECAiIgIAICIiAgAgIiICACAjof+s/54VPoi8PAAAAAElFTkSuQmCC" alt="plot of chunk unnamed-chunk-36"/> <img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-36"/> </p>
+
 <blockquote>
-<p>SOLUTION:</p>
+<p>SOLUTION: The distribution of smokers is approximately normal with a mean of <code>3205.9889</code> and a standard-deviation of <code>504.2439</code>. The distribution of weights among non-smokers is a little bit skewed to the left, with a mean of <code>3287.4937</code> and a standard-deviation of <code>554.4829</code>.</p>
 </blockquote>
 
 <ul>
 <li>Compute the 95% confidence interval for the difference in means using the formula \( t \), bootstrap percentile, and bootstrap \( t \) methods and compare your results.  Which interval would you report?</li>
 </ul>
 
+<pre><code class="r">Weight.Smokers &lt;- subset(Texas, select = Weight, Smoker == &quot;Yes&quot;, drop = TRUE)
+Weight.Non &lt;- subset(Texas, select = Weight, Smoker == &quot;No&quot;, drop = TRUE)
+thetahat &lt;- mean(Weight.Smokers) - mean(Weight.Non)
+nx &lt;- length(Weight.Smokers)
+ny &lt;- length(Weight.Non)
+SE &lt;- sqrt(var(Weight.Smokers)/nx + var(Weight.Non)/ny)
+N &lt;- 10^4
+Tstar &lt;- numeric(N)
+DM &lt;- numeric(N)
+set.seed(1)
+for (i in 1:N) {
+    bootx &lt;- sample(Weight.Smokers, nx, replace = TRUE)
+    booty &lt;- sample(Weight.Non, ny, replace = TRUE)
+    Tstar[i] &lt;- (mean(bootx) - mean(booty) - thetahat)/sqrt(var(bootx)/nx + 
+        var(booty)/ny)
+    DM[i] &lt;- mean(bootx) - mean(booty)
+}
+CItboot &lt;- thetahat - quantile(Tstar, c(0.975, 0.025)) * SE
+names(CItboot) &lt;- NULL
+CItboot
+</code></pre>
+
+<pre><code>[1] -189.4   28.8
+</code></pre>
+
+<pre><code class="r">CIperct &lt;- quantile(DM, c(0.025, 0.975))
+CIperct
+</code></pre>
+
+<pre><code>   2.5%   97.5% 
+-188.63   26.02 
+</code></pre>
+
+<pre><code class="r">t.test(Weight.Smokers, Weight.Non)$conf
+</code></pre>
+
+<pre><code>[1] -190.69   27.68
+attr(,&quot;conf.level&quot;)
+[1] 0.95
+</code></pre>
+
 <blockquote>
-<p>SOLUTION:</p>
+<p>SOLUTION: The 95% bootstrap \( t \) interval for the difference in means is (<code>-189.4169</code>, <code>28.8041</code>).  For comparison, the formula \( t \) interval is (<code>-190.6915</code>, <code>27.682</code>) and the bootstrap percentile interval is (<code>-188.6289</code>, <code>26.0167</code>).</p>
 </blockquote>
 
 <ul>
 <li>Modify your result from the previous question to obtain a one-sided 95% \( t \) confidence interval (hypothesizing that babies born to nonsmokers weigh more than babies born to smokers).</li>
 </ul>
 
+<pre><code class="r">CItboot &lt;- thetahat - quantile(Tstar, 0.975) * SE
+names(CItboot) &lt;- NULL
+CItboot
+</code></pre>
+
+<pre><code>[1] -189.4
+</code></pre>
+
+<pre><code class="r">test &lt;- t.test(Weight.Smokers, Weight.Non, alternative = &quot;g&quot;)
+</code></pre>
+
 <blockquote>
-<p>SOLUTION:</p>
+<p>SOLUTION: Using a one sided test we find that the difference in weights of Texan babies is at least <code>-189.4169</code>. This is as compared to the formula \( t \) interval lower limit of <code>-172.8809</code>.</p>
 </blockquote>
 
 </body>

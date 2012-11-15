@@ -301,7 +301,7 @@ chlorine <- with(Banga, Chlorine[!is.na(Chlorine)])
 
 * Compute the numeric summaries of the cholorine levels and create a plot and comment on the distribution.
 
-```{r}
+```{r warning=FALSE,message=FALSE}
 EDA.hist(chlorine)
 EDA.qq(chlorine)
 ```
@@ -330,7 +330,8 @@ test
 > SOLUTION:
 
 ```{r}
-skewness(Banga$Arsenic, na.rm = T)
+skew <- skewness(Banga$Arsenic, na.rm = T)
+test <- tboot(Banga$Arsenic)
 ```
 
 
@@ -341,10 +342,9 @@ Water <- importData("MnGroundwater")
 head(Water)
 ```
 
-
 * Create a histogram, a density, and a normal quantile plot of the alkalinity and comment on the distribution.
 
-```{r}
+```{r warning=FALSE,message=FALSE}
 EDA.hist(Water$Alkalinity)
 EDA.qq(Water$Alkalinity)
 ```
@@ -364,19 +364,67 @@ test <- t.test(Water$Alkalinity)
 > SOLUTION:
 
 **Prob11** Consider the babies born in Texas in 2004 (`TXBirths2004`).  We will compare the weights of babies born to nonsmokers and smokers.
+```{r}
+Texas <- importData("TXBirths2004")
+head(Texas)
+```
 
 * How many nonsmokers and smokers are there in this data set?
+```{r}
+smokers <- sum(Texas$Smoker == "Yes")
+nonsmokers <- sum(Texas$Smoker == "No")
+```
 
-> SOLUTION:
+> SOLUTION: In this data set of `r dim(Texas)[1]` texans, there are `r smokers` smokers and `r nonsmokers` non-smokers.
 
 * Create exploratory plots of the weights for the two groups and comment on the distributions.
+```{r}
+ggplot(data = Texas, aes(x = Weight)) + geom_histogram() + facet_grid(Smoker~.)
+ggplot(data = Texas, aes(sample = Weight)) + stat_qq() + facet_grid(Smoker~.)
+smokersEDA <- c(mean(Texas$Weight[Texas$Smoker == "Yes"]), sd(Texas$Weight[Texas$Smoker == "Yes"]))
+nonsmokersEDA <- c(mean(Texas$Weight[Texas$Smoker == "No"]), sd(Texas$Weight[Texas$Smoker == "No"]))
+```
 
-> SOLUTION:
+> SOLUTION: The distribution of smokers is approximately normal with a mean of `r smokersEDA[1]` and a standard-deviation of `r smokersEDA[2]`. The distribution of weights among non-smokers is a little bit skewed to the left, with a mean of `r nonsmokersEDA[1]` and a standard-deviation of `r nonsmokersEDA[2]`.
 
 * Compute the 95% confidence interval for the difference in means using the formula $t$, bootstrap percentile, and bootstrap $t$ methods and compare your results.  Which interval would you report?
 
-> SOLUTION:
+```{r}
+Weight.Smokers <- subset(Texas, select=Weight, Smoker == "Yes", drop=TRUE)
+Weight.Non <- subset(Texas, select=Weight, Smoker == "No", drop=TRUE)
+thetahat <- mean(Weight.Smokers) - mean(Weight.Non)
+nx <- length(Weight.Smokers)
+ny <- length(Weight.Non)
+SE <- sqrt(var(Weight.Smokers)/nx + var(Weight.Non)/ny)
+N <- 10^4
+Tstar <- numeric(N)
+DM <- numeric(N)
+set.seed(1)
+for(i in 1:N)
+{
+  bootx <- sample(Weight.Smokers, nx, replace=TRUE)
+  booty <- sample(Weight.Non, ny, replace=TRUE)
+  Tstar[i] <- (mean(bootx) - mean(booty) - thetahat) /
+    sqrt(var(bootx)/nx + var(booty)/ny)
+  DM[i] <- mean(bootx) - mean(booty)
+}
+CItboot <- thetahat - quantile(Tstar, c(.975, .025)) * SE
+names(CItboot) <- NULL
+CItboot
+CIperct <- quantile(DM, c(0.025, 0.975))
+CIperct
+t.test(Weight.Smokers, Weight.Non)$conf
+```
+
+> SOLUTION: The 95% bootstrap $t$ interval for the difference in means is (`r CItboot[1]`, `r CItboot[2]`).  For comparison, the formula $t$ interval is (`r t.test(Weight.Smokers, Weight.Non)$conf[1]`, `r t.test(Weight.Smokers, Weight.Non)$conf[2]`) and the bootstrap percentile interval is (`r CIperct[1]`, `r CIperct[2]`).
 
 * Modify your result from the previous question to obtain a one-sided 95% $t$ confidence interval (hypothesizing that babies born to nonsmokers weigh more than babies born to smokers).
 
-> SOLUTION:
+```{r}
+CItboot <- thetahat - quantile(Tstar, .975) * SE
+names(CItboot) <- NULL
+CItboot
+test <- t.test(Weight.Smokers, Weight.Non, alternative="g")
+```
+
+> SOLUTION: Using a one sided test we find that the difference in weights of Texan babies is at least `r  CItboot`. This is as compared to the formula $t$ interval lower limit of `r  test$conf.int[1]`.
